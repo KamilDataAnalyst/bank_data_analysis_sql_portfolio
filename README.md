@@ -47,10 +47,10 @@ Analiza została przeprowadzona na relacyjnej bazie danych składającej się z 
 ## ⚙️ Repository Structure & Data Pipeline (ETL)
 Projekt został podzielony na logiczne etapy, odzwierciedlające realny proces pracy z danymi (od surowych plików po gotowe wnioski). W repozytorium znajdują się źródłowe pliki `.csv` oraz skrypty SQL, które należy uruchamiać w poniższej kolejności:
 
-1. `01_import_and_fixes.sql` – **Dostosowanie typów danych po imporcie:** Rozwiązanie problemów z domyślnym mapowaniem typów przez kreator importu MS SQL Server. Jawna konwersja kolumn za pomocą instrukcji `ALTER COLUMN` (m.in. zmiana kwot na `FLOAT`, dat na precyzyjny format `DATETIME2` oraz identyfikatorów na `INT`), umożliwiająca poprawne wykonywanie operacji matematycznych i agregacji czasowych w dalszych etapach.
-2. `02_create_views.sql` – **Warstwa standaryzacji i czyszczenia (Data Cleaning Views):** Utworzenie widoków bazodanowych zapewniających spójność danych przed analizą. W tej warstwie zrealizowano m.in. standaryzację danych tekstowych (ujednolicenie wielkości liter w nazwach miast transakcji w celu uniknięcia sztucznego duplikowania grup w agregacjach), obsługę potencjalnych wartości pustych (`NULL`) oraz odcięcie rekordów niespełniających kryteriów biznesowych.
-3. `03_analysis_queries.sql` – **Warstwa analityczna:** Skrypt zawierający 11 zaawansowanych biznesowych zapytań SQL, podzielonych na dedykowane bloki tematyczne.
-4. `/data` – folder zawierający źródłowe pliki `.csv` (Klienci, Konta, Transakcje), na których bazuje cały projekt.
+1. [`01_import_and_fixes.sql`](./01_import_and_fixes.sql) – **Dostosowanie typów danych po imporcie:** Rozwiązanie problemów z domyślnym mapowaniem typów przez kreator importu MS SQL Server. Jawna konwersja kolumn za pomocą instrukcji `ALTER COLUMN` (m.in. zmiana kwot na `FLOAT`, dat na precyzyjny format `DATETIME2` oraz identyfikatorów na `INT`), umożliwiająca poprawne wykonywanie operacji matematycznych i agregacji czasowych w dalszych etapach.
+2. [`02_create_views.sql`](./02_create_views.sql) – **Warstwa standaryzacji i czyszczenia (Data Cleaning Views):** Utworzenie widoków bazodanowych zapewniających spójność danych przed analizą. W tej warstwie zrealizowano m.in. standaryzację danych tekstowych (ujednolicenie wielkości liter w nazwach miast transakcji w celu uniknięcia sztucznego duplikowania grup w agregacjach), obsługę potencjalnych wartości pustych (`NULL`) oraz odcięcie rekordów niespełniających kryteriów biznesowych.
+3. [`03_analysis_queries.sql`](./03_analysis_queries.sql) – **Warstwa analityczna:** Skrypt zawierający 11 zaawansowanych biznesowych zapytań SQL, podzielonych na dedykowane bloki tematyczne.
+4. [`/data`](./data) – folder zawierający źródłowe pliki `.csv` (Klienci, Konta, Transakcje), na których bazuje cały projekt.
 
 ---
 
