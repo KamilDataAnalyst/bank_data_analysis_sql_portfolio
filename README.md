@@ -488,7 +488,7 @@ JOIN TabelaKonta ko ON t.konto_id = ko.konto_id
 JOIN TabelaKlienci k ON ko.klient_id = k.klient_id
 CROSS JOIN DataOdniesienia d
 GROUP BY k.klient_id, k.imie, k.nazwisko, d.punkt_odniesienia
-HAVING DATEDIFF(day,  MAX(t.data_transakcji), d.punkt_odniesienia) > 30
+HAVING DATEDIFF(day, MAX(t.data_transakcji), d.punkt_odniesienia) > 30
 ORDER BY dni_bez_aktywnosci DESC;
 ```
 **Poglądowy wynik analizy (Top 5 rekordów):**
