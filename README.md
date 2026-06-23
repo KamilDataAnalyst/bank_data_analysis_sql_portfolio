@@ -71,7 +71,7 @@ Prace nad projektem zostały podzielone na trzy dedykowane bloki analityczne. Ka
 <details>
 <summary><b>💰 Blok II: Analiza Finansowa i Zachowania Transakcyjne (Zadania 5-8)</b></summary>
 
-* [**Zadanie 5**: Udział procentowy metod płatności]
+* [**Zadanie 5**: Udział procentowy metod płatności](#zadanie-5)
 * [**Zadanie 6**: Łączna suma wydatków klientów w ujęciu chronologicznym miesiąc do miesiąca (MoM)](#zadanie-6)
 * [**Zadanie 7**: Ranking TOP 3 największych transakcji dla każdego miasta](#zadanie-7)
 * [**Zadanie 8**: Analiza mobilności klientów (wydatki lokalne vs mobilne)](#zadanie-8)
@@ -382,7 +382,7 @@ ORDER BY procent_wydatkow_mobilnych DESC;
 **Kod SQL:**
 ```sql
 WITH TransakcjeZHistoria AS (
-	SELECT 
+	SELECT
 		k.klient_id,
 		t.data_transakcji AS podejrzana_transakcja,
 		t.kraj_transakcji AS kraj_podejrzanej_transakcji,
@@ -482,7 +482,7 @@ SELECT
 	k.klient_id,
 	k.imie || ' ' || k.nazwisko AS pelne_nazwisko,
 	CONVERT(DATE, MAX(t.data_transakcji)) AS data_ostatniej_transakcji,
-	DATEDIFF(day,  MAX(t.data_transakcji), d.punkt_odniesienia) AS dni_bez_aktywnosci
+	DATEDIFF(day, MAX(t.data_transakcji), d.punkt_odniesienia) AS dni_bez_aktywnosci
 FROM v_CzysteTransakcje t
 JOIN TabelaKonta ko ON t.konto_id = ko.konto_id
 JOIN TabelaKlienci k ON ko.klient_id = k.klient_id
