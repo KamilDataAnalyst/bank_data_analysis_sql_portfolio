@@ -71,8 +71,8 @@ Prace nad projektem zostały podzielone na trzy dedykowane bloki analityczne. Ka
 <details>
 <summary><b>💰 Blok II: Analiza Finansowa i Zachowania Transakcyjne (Zadania 5-8)</b></summary>
 
-* [**Zadanie 5**: Udział procentowy metod płatności](#-zadanie-5-udział-procentowy-metod-płatności)
-* [**Zadanie 6**: Łączna suma wydatków klientów w ujęciu chronologicznym miesiąc do miesiąca (MoM)](#-zadanie-6-łączna-suma-wydatków-klientów-w-ujęciu-chronologicznym-miesiąc-do-miesiąca-mom)
+* [**Zadanie 5**: Udział procentowy metod płatności]
+* [**Zadanie 6**: Łączna suma wydatków klientów w ujęciu chronologicznym miesiąc do miesiąca (MoM)](#zadanie-6)
 * [**Zadanie 7**: Ranking TOP 3 największych transakcji dla każdego miasta](#-zadanie-7-ranking-top-3-największych-transakcji-dla-każdego-miasta)
 * [**Zadanie 8**: Analiza mobilności klientów (wydatki lokalne vs mobilne)](#-zadanie-8-analiza-mobilności-klientów-wydatki-lokalne-vs-mobilne)
 </details>
@@ -253,7 +253,7 @@ ORDER BY udzial_procentowy DESC;
 </details>
 
 <details>
-<summary>📌 <b>Zadanie 6</b>: Łączna suma wydatków klientów w ujęciu chronologicznym miesiąc do miesiąca (MoM)</summary>
+<summary><a id="zadanie-6"></a>📌 <b>Zadanie 6</b>: Łączna suma wydatków klientów w ujęciu chronologicznym miesiąc do miesiąca (MoM)</summary>
 <br>
 
 **Opis biznesowy:** Analiza trendu dynamiki wydatków klientów w ujęciu miesięcznym (Month-over-Month). Wykorzystanie funkcji okna pozwala na bezpośrednie porównanie łącznego wolumenu transakcji z miesiąca na miesiąc oraz wyznaczenie procentowego wskaźnika zmiany, co jest kluczowe dla identyfikacji sezonowości w zachowaniach płatniczych oraz prognozowania płynności finansowej.
