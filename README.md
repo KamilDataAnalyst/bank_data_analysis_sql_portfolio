@@ -62,7 +62,7 @@ Prace nad projektem zostały podzielone na trzy dedykowane bloki analityczne. Ka
 <details>
 <summary><b>👤 Blok I: Profilowanie i Segmentacja Bazy Klientów (Zadania 1-4)</b></summary>
 
-* **Zadanie 1:** Analiza struktury demograficznej i wiekowej klientów.
+* [**Zadanie 1**: Rentowność prowizyjna i wolumen transakcji per miasto](#-zadanie-1-rentowność-prowizyjna-i-wolumen-transakcji-per-miasto)
 * **Zadanie 2:** Identyfikacja kluczowych miast rodzinnych użytkowników.
 * **Zadanie 3:** Segmentacja klientów pod kątem stażu w banku.
 * **Zadanie 4:** Analiza popularności typów kont w zależności od segmentu.
@@ -90,3 +90,23 @@ Prace nad projektem zostały podzielone na trzy dedykowane bloki analityczne. Ka
 ---
 
 ## 🚀 Detailed Tasks & Queries
+
+### 📌 **Zadanie 1**: Rentowność prowizyjna i wolumen transakcji per miasto
+
+**Opis biznesowy:** Analiza zakończonych sukcesem transakcji stacjonarnych w ujęciu geograficznym. Celem jest określenie łącznego obrotu, średniej wartości koszyka zakupowego oraz zysku banku z prowizji (0.2%) za płatności kartą w poszczególnych miastach.
+
+> 💡 **Kluczowy wniosek (Insight):** **Zapytanie precyzyjnie wskazuje lokalizacje generujące najwyższy strumień przychodów prowizyjnych, co pozwala działowi marketingu optymalizować budżety na lokalne kampanie partnerskie i targetować najbardziej dochodowe regiony.**
+
+**Kod SQL:**
+```sql
+SELECT
+	miasto_transakcji,
+	COUNT(*) AS liczba_transakcji,
+	ROUND(SUM(kwota), 0) AS laczny_obrot,
+	ROUND(AVG(kwota), 2) AS srednia_wartosc,
+	ROUND(SUM(CASE WHEN metoda_platnosci = 'Karta' THEN kwota * 0.002 ELSE 0 END), 2) AS zysk_banku_prowizja
+FROM v_CzysteTransakcje
+WHERE miasto_transakcji <> 'Online / Brak danych'
+	AND status_transakcji = 'Zakonczona'
+GROUP BY miasto_transakcji
+ORDER BY zysk_banku_prowizja DESC;
