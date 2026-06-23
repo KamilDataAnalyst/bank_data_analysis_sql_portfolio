@@ -501,3 +501,26 @@ ORDER BY dni_bez_aktywnosci DESC;
 | **459** | Adam Michalski | 2025-11-20 | 41 |
 | **31** | Karolina Wójcik | 2025-11-25 | 36 |
 </details>
+
+---
+
+## 📈 Summary & Business Impact
+
+Projekt pozwolił na przekształcenie ponad 50 000 surowych rekordów transakcyjnych w realne wskaźniki biznesowe (KPI). Dzięki zastosowaniu zaawansowanych technik SQL, takich jak funkcje okna, wyrażenia CTE oraz procesy ETL, udało się:
+* **Zoptymalizować koszty CRM** poprzez precyzyjne wytypowanie klientów zagrożonych odejściem (Analiza Retencji).
+* **Zwiększyć bezpieczeństwo funduszy** dzięki stworzeniu fundamentu pod reguły antyfraudowe działające w czasie rzeczywistym (*velocity checks*).
+* **Dostarczyć wiedzy marketingowej** o geolokalizacji wydatków klientów, co umożliwia lepsze targetowanie kampanii push i ofert partnerskich.
+
+---
+
+## 🚀 Jak uruchomić projekt u siebie?
+
+1. Pobierz zawartość tego repozytorium na swój komputer (kliknij zielony przycisk **Code** u góry strony, a następnie wybierz **Download ZIP** i rozpakuj archiwum).
+2. Zaimportuj pliki `.csv` z folderu `/data` do swojego programu MS SQL Server Management Studio (SSMS).
+3. Uruchom skrypty SQL w swojej bazie danych w następującej kolejności:
+   * `01_import_and_fixes.sql` (przygotowanie danych i zmiana typów kolumn)
+   * `02_create_views.sql` (utworzenie widoków standaryzujących i czyszczących)
+   * `03_analysis_queries.sql` (główne zapytania analityczne i raportowe)
+
+---
+*Projekt został zrealizowany w 100% samodzielnie jako element profesjonalnego portfolio analityka danych.*
