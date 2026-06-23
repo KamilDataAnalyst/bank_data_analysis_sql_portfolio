@@ -62,10 +62,10 @@ Prace nad projektem zostały podzielone na trzy dedykowane bloki analityczne. Ka
 <details>
 <summary><b>👤 Blok I: Profilowanie i Segmentacja Bazy Klientów (Zadania 1-4)</b></summary>
 
-* [**Zadanie 1**: Rentowność prowizyjna i wolumen transakcji per miasto](#-zadanie-1-rentowność-prowizyjna-i-wolumen-transakcji-per-miasto)
-* [**Zadanie 2**: Liczba i suma transakcji w podziale na godziny w ciągu doby](#-zadanie-2-liczba-i-suma-transakcji-w-podziale-na-godziny-w-ciągu-doby)
-* [**Zadanie 3**: Top 10 najbardziej dochodowych klientów](#-zadanie-3-top-10-najbardziej-dochodowych-klientów)
-* [**Zadanie 4**: Porównanie segmentów klientów Standard, Premium i VIP](#-zadanie-4-porównanie-segmentów-klientów-standard-premium-i-vip)
+* [**Zadanie 1**: Rentowność prowizyjna i wolumen transakcji per miasto](#zadanie-1)
+* [**Zadanie 2**: Liczba i suma transakcji w podziale na godziny w ciągu doby](#zadanie-2)
+* [**Zadanie 3**: Top 10 najbardziej dochodowych klientów](#zadanie-3)
+* [**Zadanie 4**: Porównanie segmentów klientów Standard, Premium i VIP](#zadanie-4)
 </details>
 
 <details>
@@ -73,16 +73,16 @@ Prace nad projektem zostały podzielone na trzy dedykowane bloki analityczne. Ka
 
 * [**Zadanie 5**: Udział procentowy metod płatności]
 * [**Zadanie 6**: Łączna suma wydatków klientów w ujęciu chronologicznym miesiąc do miesiąca (MoM)](#zadanie-6)
-* [**Zadanie 7**: Ranking TOP 3 największych transakcji dla każdego miasta](#-zadanie-7-ranking-top-3-największych-transakcji-dla-każdego-miasta)
-* [**Zadanie 8**: Analiza mobilności klientów (wydatki lokalne vs mobilne)](#-zadanie-8-analiza-mobilności-klientów-wydatki-lokalne-vs-mobilne)
+* [**Zadanie 7**: Ranking TOP 3 największych transakcji dla każdego miasta](#zadanie-7)
+* [**Zadanie 8**: Analiza mobilności klientów (wydatki lokalne vs mobilne)](#zadanie-8)
 </details>
 
 <details>
 <summary><b>🛡️ Blok III: Zaawansowana Analityka i Detekcja Anomalii (Zadania 9-11)</b></summary>
 
-* [**Zadanie 9**: System Antyfraudowy (Wykrywanie podejrzanych transakcji transgranicznych)](#-zadanie-9-system-antyfraudowy-wykrywanie-podejrzanych-transakcji-transgranicznych)
-* [**Zadanie 10**: Detekcja Anomalii (Wykrywanie transakcji rażąco odbiegających od średniej kategorii)](#-zadanie-10-detekcja-anomalii-wykrywanie-transakcji-rażąco-odbiegających-od-średniej-kategorii)
-* [**Zadanie 11**: Analiza Retencji (Identyfikacja klientów zagrożonych odejściem)](#-zadanie-11-analiza-retencji-identyfikacja-klientów-zagrożonych-odejściem)
+* [**Zadanie 9**: System Antyfraudowy (Wykrywanie podejrzanych transakcji transgranicznych)](#zadanie-9)
+* [**Zadanie 10**: Detekcja Anomalii (Wykrywanie transakcji rażąco odbiegających od średniej kategorii)](#zadanie-10)
+* [**Zadanie 11**: Analiza Retencji (Identyfikacja klientów zagrożonych odejściem)](#zadanie-11)
 </details>
 
 *(Dla każdego z powyższych zadań poniżej znajduje się pełny opis biznesowy, kod SQL, poglądowa tabela z wynikami oraz kluczowe wnioski analityczne).*
@@ -92,7 +92,7 @@ Prace nad projektem zostały podzielone na trzy dedykowane bloki analityczne. Ka
 ## 🚀 Detailed Tasks & Queries
 
 <details>
-<summary>📌 <b>Zadanie 1</b>: Rentowność prowizyjna i wolumen transakcji per miasto</summary>
+<summary><a id="zadanie-1"></a>📌 <b>Zadanie 1</b>: Rentowność prowizyjna i wolumen transakcji per miasto</summary>
 <br>
 
 **Opis biznesowy:** Analiza zakończonych sukcesem transakcji stacjonarnych w ujęciu geograficznym. Celem jest określenie łącznego obrotu, średniej wartości koszyka zakupowego oraz zysku banku z prowizji (0.2%) za płatności kartą w poszczególnych miastach.
@@ -125,7 +125,7 @@ ORDER BY zysk_banku_prowizja DESC;
 </details>
 
 <details>
-<summary>📌 <b>Zadanie 2</b>: Liczba i suma transakcji w podziale na godziny w ciągu doby</summary>
+<summary><a id="zadanie-2"></a>📌 <b>Zadanie 2</b>: Liczba i suma transakcji w podziale na godziny w ciągu doby</summary>
 <br>
 
 **Opis biznesowy:** Analiza liczby oraz wolumenu transakcji w ujęciu godzinowym. Celem jest identyfikacja godzin szczytowego obciążenia systemu, co pozwala zoptymalizować okna serwisowe i dostosować wydajność infrastruktury bankowej do okresów największej aktywności klientów.
@@ -155,7 +155,7 @@ ORDER BY godzina ASC;
 </details>
 
 <details>
-<summary>📌 <b>Zadanie 3</b>: Top 10 najbardziej dochodowych klientów</summary>
+<summary><a id="zadanie-3"></a>📌 <b>Zadanie 3</b>: Top 10 najbardziej dochodowych klientów</summary>
 <br>
 
 **Opis biznesowy:** Identyfikacja kluczowych klientów (VIP) generujących największy obrót na kontach bankowych. Analiza sumy uregulowanych transakcji pozwala wyodrębnić segment użytkowników o najwyższej wartości dla instytucji, co umożliwia przygotowanie spersonalizowanych ofert premium oraz programów lojalnościowych.
@@ -189,7 +189,7 @@ ORDER BY SUM(t.kwota) DESC;
 </details>
 
 <details>
-<summary>📌 <b>Zadanie 4</b>: Porównanie segmentów klientów Standard, Premium i VIP</summary>
+<summary><a id="zadanie-4"></a>📌 <b>Zadanie 4</b>: Porównanie segmentów klientów Standard, Premium i VIP</summary>
 <br>
 
 **Opis biznesowy:** Kompleksowe zestawienie segmentów użytkowników w celu weryfikacji ich realnej wartości biznesowej. Analiza pozwala ocenić strukturę bazy klienckiej oraz porównać wolumeny finansowe, średnią wartość transakcji i częstotliwość transakcji pomiędzy grupami Standard, Premium i VIP, co stanowi podstawę do optymalizacji strategii produktowej.
@@ -223,7 +223,7 @@ ORDER BY laczna_kwota DESC;
 </details>
 
 <details>
-<summary>📌 <b>Zadanie 5</b>: Udział procentowy metod płatności</summary>
+<summary><a id="zadanie-5"></a>📌 <b>Zadanie 5</b>: Udział procentowy metod płatności</summary>
 <br>
 
 **Opis biznesowy:** Analiza struktury wykorzystania kanałów płatności przez klientów banku. Określenie procentowego udziału poszczególnych metod (np. BLIK, Karta, Przelew) w łącznej liczbie zrealizowanych transakcji pozwala zrozumieć preferencje użytkowników, co jest kluczowe dla rozwoju aplikacji mobilnej oraz negocjacji stawek interchange z organizacjami płatniczymi.
@@ -290,7 +290,7 @@ ORDER BY miesiac;
 </details>
 
 <details>
-<summary>📌 <b>Zadanie 7</b>: Ranking TOP 3 największych transakcji dla każdego miasta</summary>
+<summary><a id="zadanie-7"></a>📌 <b>Zadanie 7</b>: Ranking TOP 3 największych transakcji dla każdego miasta</summary>
 <br>
 
 **Opis biznesowy:** Identyfikacja najwyższych jednostkowych operacji finansowych w podziale na lokalizacje geograficzne (miasta transakcji). Zastosowanie funkcji analitycznej `DENSE_RANK()` umożliwia precyzyjne uszeregowanie transakcji i wyłonienie ścisłej czołówki dla każdego rynku lokalnego, co pozwala na analizę regionalnej siły nabywczej klientów oraz wykrywanie obszarów o największym potencjale dla usług premium.
@@ -335,7 +335,7 @@ ORDER BY MAX(kwota) OVER (PARTITION BY miasto_transakcji) DESC, miasto_transakcj
 </details>
 
 <details>
-<summary>📌 <b>Zadanie 8</b>: Analiza mobilności klientów (wydatki lokalne vs mobilne)</summary>
+<summary><a id="zadanie-8"></a>📌 <b>Zadanie 8</b>: Analiza mobilności klientów (wydatki lokalne vs mobilne)</summary>
 <br>
 
 **Opis biznesowy:** Ocena poziomu migracji i mobilności klientów poprzez porównanie wolumenu transakcji realizowanych w ich miastach rodzinnych z wydatkami w pozostałych lokalizacjach stacjonarnych (z wykluczeniem transakcji internetowych). Wynik pozwala wyodrębnić segment użytkowników „podróżujących”, co umożliwia precyzyjne targetowanie ofert związanych z ubezpieczeniami turystycznymi, kontami walutowymi czy programami partnerskimi na stacjach paliw.
@@ -371,7 +371,7 @@ ORDER BY procent_wydatkow_mobilnych DESC;
 </details>
 
 <details>
-<summary>📌 <b>Zadanie 9</b>: System Antyfraudowy (Wykrywanie podejrzanych transakcji transgranicznych)</summary>
+<summary><a id="zadanie-9"></a>📌 <b>Zadanie 9</b>: System Antyfraudowy (Wykrywanie podejrzanych transakcji transgranicznych)</summary>
 <br>
 
 **Opis biznesowy:** Algorytm detekcji nadużyć finansowych (Anti-Fraud) identyfikujący niemożliwe z fizycznego punktu widzenia zachowania użytkowników (tzw. *velocity checks*). Analiza wyszukuje pary transakcji stacjonarnych zrealizowanych na tym samym koncie w odstępie krótszym niż godzina, ale w różnych krajach. Taka sytuacja jednoznacznie wskazuje na wysokie ryzyko przejęcia danych karty lub sklonowania paska magnetycznego, wymagając natychmiastowej blokady prewencyjnej.
@@ -420,7 +420,7 @@ ORDER BY kwota_podejrzanej_transakcji DESC;
 </details>
 
 <details>
-<summary>📌 <b>Zadanie 10</b>: Detekcja Anomalii (Wykrywanie transakcji rażąco odbiegających od średniej kategorii)</summary>
+<summary><a id="zadanie-10"></a>📌 <b>Zadanie 10</b>: Detekcja Anomalii (Wykrywanie transakcji rażąco odbiegających od średniej kategorii)</summary>
 <br>
 
 **Opis biznesowy:** Zaawansowana analiza statystyczna ukierunkowana na wykrywanie nietypowych zachowań finansowych (Anomaly Detection). Zapytanie identyfikuje transakcje, których wartość ponad pięciokrotnie przewyższa średnią kwotę operacji w danej kategorii wydatków. Narzędzie to pozwala wyłapywać błędy systemowe, nietypowe zakupy luksusowe oraz potencjalne nadużycia, zanim wpłyną one na zaburzenie globalnych statystyk raportowych.
@@ -464,7 +464,7 @@ ORDER BY krotnosc_sredniej DESC;
 </details>
 
 <details>
-<summary>📌 <b>Zadanie 11</b>: Analiza Retencji (Identyfikacja klientów zagrożonych odejściem)</summary>
+<summary><a id="zadanie-11"></a>📌 <b>Zadanie 11</b>: Analiza Retencji (Identyfikacja klientów zagrożonych odejściem)</summary>
 <br>
 
 **Opis biznesowy:** Analiza wskaźnika retencji (Churn Analysis) nastawiona na prewencyjne wykrywanie klientów pasywnych, u których brak aktywności transakcyjnej przekracza 30 dni względem ostatniej daty w bazie danych. Wykorzystanie złączenia krzyżowego (`CROSS JOIN`) do dynamicznego wyznaczenia punktu odniesienia pozwala precyzyjnie określić czas trwania bezczynności, co umożliwia działom CRM podjęcie natychmiastowych działań reaktywacyjnych (np. poprzez dedykowane kampanie mailingowe lub oferty specjalne).
