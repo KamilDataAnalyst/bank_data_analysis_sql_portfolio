@@ -4,12 +4,12 @@ SELECT
 	COUNT(*) AS liczba_transakcji,
 	ROUND(SUM(kwota), 0) AS laczny_obrot,
 	ROUND(AVG(kwota), 2) AS srednia_wartosc,
-	ROUND(SUM(CASE WHEN metoda_platnosci = 'Karta' THEN kwota * 0.002 ELSE 0 END), 2) AS zysk_banku_prowizja
+	ROUND(SUM(CASE WHEN metoda_platnosci = 'Karta' THEN kwota * 0.002 ELSE 0 END), 2) AS zysk_banku_prowizja_z_karty
 FROM v_CzysteTransakcje
 WHERE miasto_transakcji <> 'Online / Brak danych'
 	AND status_transakcji = 'Zakonczona'
 GROUP BY miasto_transakcji
-ORDER BY zysk_banku_prowizja DESC;
+ORDER BY zysk_banku_prowizja_z_karty DESC;
 
 -- Zadanie 2: Liczba i suma transakcji w podziale na godziny w ciągu doby w celu określenia godzin szczytowego obciążenia systemu.
 SELECT
@@ -18,12 +18,12 @@ SELECT
 	ROUND(SUM(kwota), 0) AS laczna_kwota
 FROM v_CzysteTransakcje
 GROUP BY DATEPART(hour, data_transakcji)
-ORDER BY godzina ASC;
+ORDER BY laczna_kwota DESC;
 
 -- Zadanie 3: Top 10 najbardziej dochodowych klientów pod względem sumy uregulowanych transakcji.
 SELECT TOP 10
 	k.klient_id,
-	k.imie || ' ' || k.nazwisko AS pelne_nazwisko,
+	CONCAT(k.imie, ' ', k.nazwisko) AS pelne_nazwisko,
 	k.miasto_rodzinne,
 	ROUND(SUM(t.kwota), 0) AS laczna_kwota_transakcji
 FROM TabelaKlienci k
@@ -95,13 +95,13 @@ SELECT
 	kwota
 FROM RankingTransakcji
 WHERE pozycja_w_miescie <= 3
-	AND miasto_transakcji NOT LIKE 'Online%'
+	AND miasto_transakcji <> 'Online / Brak danych'
 ORDER BY MAX(kwota) OVER (PARTITION BY miasto_transakcji) DESC, miasto_transakcji, pozycja_w_miescie;
 
 -- Zadanie 8: Analiza mobilności klientów poprzez porównanie wydatków w mieście rodzinnym z wydatkami w innych lokalizacjach.
 SELECT
 	k.klient_id,
-	k.imie || ' ' || k.nazwisko AS pelne_nazwisko,
+	CONCAT(k.imie, ' ', k.nazwisko) AS pelne_nazwisko,
 	ROUND(SUM(CASE WHEN k.miasto_rodzinne = t.miasto_transakcji THEN t.kwota ELSE 0 END), 0) AS wydatki_lokalne,
 	ROUND(SUM(CASE WHEN k.miasto_rodzinne <> t.miasto_transakcji THEN t.kwota ELSE 0 END), 0) AS wydatki_mobilne,
 	ROUND(SUM(CASE WHEN k.miasto_rodzinne <> t.miasto_transakcji THEN t.kwota ELSE 0 END) * 100 / NULLIF(SUM(t.kwota), 0), 2) AS procent_wydatkow_mobilnych
@@ -109,7 +109,7 @@ FROM v_CzysteTransakcje t
 JOIN TabelaKonta ko ON t.konto_id = ko.konto_id
 JOIN TabelaKlienci k ON ko.klient_id = k.klient_id
 WHERE t.status_transakcji = 'Zakonczona'
-	AND t.miasto_transakcji NOT LIKE 'Online%'
+	AND t.miasto_transakcji <> 'Online / Brak danych'
 GROUP BY k.klient_id, k.imie, k.nazwisko
 ORDER BY procent_wydatkow_mobilnych DESC;
 
@@ -120,13 +120,13 @@ WITH TransakcjeZHistoria AS (
 		t.data_transakcji AS podejrzana_transakcja,
 		t.kraj_transakcji AS kraj_podejrzanej_transakcji,
 		t.kwota AS kwota_podejrzanej_transakcji,
-		LAG(t.data_transakcji) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji) AS poprzednia_transakcja,
-		LAG(t.kraj_transakcji) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji) AS kraj_poprzedniej_transakcji,
-		LAG(t.kwota) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji) AS kwota_poprzedniej_transakcji
+		LAG(t.data_transakcji) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji, t.transakcja_id) AS poprzednia_transakcja,
+		LAG(t.kraj_transakcji) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji, t.transakcja_id) AS kraj_poprzedniej_transakcji,
+		LAG(t.kwota) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji, t.transakcja_id) AS kwota_poprzedniej_transakcji
 	FROM v_CzysteTransakcje t
 	JOIN TabelaKonta ko ON t.konto_id = ko.konto_id
 	JOIN TabelaKlienci k ON ko.klient_id = k.klient_id
-	WHERE t.kraj_transakcji NOT LIKE '%online%'
+	WHERE t.kraj_transakcji <> 'Transakcja Online - nieznany'
 )
 SELECT
 	klient_id,
@@ -171,7 +171,7 @@ WITH DataOdniesienia AS (
 )
 SELECT
 	k.klient_id,
-	k.imie || ' ' || k.nazwisko AS pelne_nazwisko,
+	CONCAT(k.imie, ' ', k.nazwisko) AS pelne_nazwisko,
 	CONVERT(DATE, MAX(t.data_transakcji)) AS data_ostatniej_transakcji,
 	DATEDIFF(day,  MAX(t.data_transakcji), d.punkt_odniesienia) AS dni_bez_aktywnosci
 FROM v_CzysteTransakcje t
