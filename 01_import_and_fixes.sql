@@ -1,11 +1,11 @@
--- 1. Konwersja kwoty transakcji na typ zmiennoprzecinkowy (FLOAT) w celu umożliwienia operacji agregujących i matematycznych
+-- 1. Konwersja kwoty na FLOAT
 ALTER TABLE TabelaTransakcje
 ALTER COLUMN kwota FLOAT;
 
--- 2. Konwersja kolumny chronologicznej na precyzyjny typ DATETIME2 do zaawansowanej analizy czasowej i sezonowości
+-- 2. Konwersja daty na DATETIME2
 ALTER TABLE TabelaTransakcje
 ALTER COLUMN data_transakcji DATETIME2;
 
--- 3. Standaryzacja klucza obcego (konto_id) na typ całkowity (INT) w celu zapewnienia spójności relacji referencyjnych
+-- 3. Standaryzacja klucza obcego (konto_id) na INT
 ALTER TABLE TabelaTransakcje
 ALTER COLUMN konto_id INT;
