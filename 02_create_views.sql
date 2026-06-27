@@ -15,7 +15,7 @@ SELECT
 		WHEN miasto_transakcji IS NULL THEN 'Online / Brak danych'
 		ELSE UPPER(LEFT(miasto_transakcji, 1)) + LOWER(SUBSTRING(miasto_transakcji, 2, LEN(miasto_transakcji)))
 	END AS miasto_transakcji,
-	ISNULL(kraj_transakcji, 'Transakcja online - nieznazny') AS kraj_transakcji,
+	ISNULL(kraj_transakcji, 'Transakcja Online - nieznany') AS kraj_transakcji,
 	CASE
 		WHEN status_transakcji IS NOT NULL THEN status_transakcji
 		ELSE 'Przerwana / Błąd systemowy'
