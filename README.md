@@ -175,7 +175,7 @@ JOIN TabelaKonta ko ON k.klient_id = ko.klient_id
 JOIN v_CzysteTransakcje t ON ko.konto_id = t.konto_id
 WHERE t.status_transakcji = 'Zakonczona'
 GROUP BY k.klient_id, k.imie, k.nazwisko, k.miasto_rodzinne
-ORDER BY SUM(t.kwota) DESC;
+ORDER BY laczna_kwota_transakcji DESC;
 ```
 **Poglądowy wynik analizy (Top 5 rekordów):**
 
