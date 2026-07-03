@@ -85,7 +85,7 @@ Prace nad projektem zostały podzielone na trzy dedykowane bloki analityczne. Ka
 * [**Zadanie 11**: Analiza Retencji (Identyfikacja klientów zagrożonych odejściem)](#zadanie-11)
 </details>
 
-*(Dla każdego z powyższych zadań poniżej znajduje się pełny opis biznesowy, kod SQL, poglądowa tabela z wynikami oraz kluczowe wnioski analityczne).*
+*(Dla każdego z powyższych zadań poniżej znajduje się pełny opis biznesowy, kod SQL, poglądowy wynik SSMS z wynikami oraz kluczowe wnioski analityczne).*
 
 ---
 
