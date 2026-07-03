@@ -107,21 +107,17 @@ SELECT
 	COUNT(*) AS liczba_transakcji,
 	ROUND(SUM(kwota), 0) AS laczny_obrot,
 	ROUND(AVG(kwota), 2) AS srednia_wartosc,
-	ROUND(SUM(CASE WHEN metoda_platnosci = 'Karta' THEN kwota * 0.002 ELSE 0 END), 2) AS zysk_banku_prowizja
+	ROUND(SUM(CASE WHEN metoda_platnosci = 'Karta' THEN kwota * 0.002 ELSE 0 END), 2) AS zysk_banku_prowizja_z_karty
 FROM v_CzysteTransakcje
 WHERE miasto_transakcji <> 'Online / Brak danych'
 	AND status_transakcji = 'Zakonczona'
 GROUP BY miasto_transakcji
-ORDER BY zysk_banku_prowizja DESC;
+ORDER BY zysk_banku_prowizja_z_karty DESC;
 ```
-**Poglądowy wynik analizy (Top 5 rekordów):**
-| miasto_transakcji | liczba_transakcji | laczny_obrot | srednia_wartosc | zysk_banku_prowizja |
-| :--- | :---: | :---: | :---: | :---: |
-| **Rzym** | 140 | 1123185 | 8022,75 | 2240,22 |
-| **Nowy jork** | 124 | 967875 | 7805,44 | 1931,2 |
-| **Paryż** | 111 | 920029 | 8288,55 | 1837,86 |
-| **Berlin** | 110 | 861105 | 7828,23 | 1718,54 |
-| **Londyn** | 94 | 797730 | 8486,49 | 1582,28 |
+**Top 10 wyników:**
+
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%201.png?raw=true)
+
 </details>
 
 <details>
@@ -141,17 +137,12 @@ SELECT
 	ROUND(SUM(kwota), 0) AS laczna_kwota
 FROM v_CzysteTransakcje
 GROUP BY DATEPART(hour, data_transakcji)
-ORDER BY godzina ASC;
+ORDER BY laczna_kwota DESC;
 ```
-**Poglądowy wynik analizy (Top 5 rekordów):**
+**Top 10 wyników:**
 
-| godzina | liczba_transakcji | laczna_kwota |
-| :--- | :---: | :---: |
-| **0** | 473 | 157949 |
-| **1** | 247 | 83454 |
-| **2** | 248 | 195163 |
-| **3** | 214 | 76770 |
-| **4** | 232 | 90845 |
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%202.png?raw=true)
+
 </details>
 
 <details>
@@ -167,7 +158,7 @@ ORDER BY godzina ASC;
 ```sql
 SELECT TOP 10
 	k.klient_id,
-	k.imie || ' ' || k.nazwisko AS pelne_nazwisko,
+	CONCAT(k.imie, ' ', k.nazwisko) AS pelne_nazwisko,
 	k.miasto_rodzinne,
 	ROUND(SUM(t.kwota), 0) AS laczna_kwota_transakcji
 FROM TabelaKlienci k
@@ -177,15 +168,10 @@ WHERE t.status_transakcji = 'Zakonczona'
 GROUP BY k.klient_id, k.imie, k.nazwisko, k.miasto_rodzinne
 ORDER BY laczna_kwota_transakcji DESC;
 ```
-**Poglądowy wynik analizy (Top 5 rekordów):**
+**Pełny wynik zapytania:**
 
-| klient_id | pelne_nazwisko | miasto_rodzinne | laczna_kwota_transakcji |
-| :--- | :--- | :--- | :--- |
-| **488** | Paweł Wieczorek | Gliwice | 107122 |
-| **867** | Jakub Malinowski | Tychy | 85071 |
-| **906** | Katarzyna Nowak | Orzesze | 84514 |
-| **723** | Karolina Witkowska | Chorzów | 78974 |
-| **684** | Andrzej Adamczyk | Bytom | 78152 |
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%203.png?raw=true)
+
 </details>
 
 <details>
@@ -213,13 +199,10 @@ WHERE t.status_transakcji = 'Zakonczona'
 GROUP BY k.segment_klienta
 ORDER BY laczna_kwota DESC;
 ```
-**Poglądowy wynik analizy:**
+**Pełny wynik zapytania:**
 
-| segment_klienta | liczba_klientow | liczba_transakcji | laczna_kwota | srednia_wartosc | srednia_liczba_transakcji_na_klienta |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **Standard** | 808 | 36224 | 12976032 | 358,22 | 44,8 |
-| **Premium** | 146 | 6772 | 2512551 | 371,02 | 46,4 |
-| **VIP** | 46 | 1986 | 1577152 | 794,13 | 43,2 |
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%204.png?raw=true)
+
 </details>
 
 <details>
@@ -242,14 +225,10 @@ WHERE status_transakcji = 'Zakonczona'
 GROUP BY metoda_platnosci
 ORDER BY udzial_procentowy DESC;
 ```
-**Poglądowy wynik analizy:**
+**Pełny wynik zapytania:**
 
-| metoda_platnosci | liczba_transakcji | udzial_procentowy |
-| :--- | :--- | :--- |
-| **BLIK** | 17594 | 39,11 |
-| **Karta** | 16412 | 36,49 |
-| **Online** | 8055 | 17,91 |
-| **Przelew Krajowy** | 2921 | 6,49 |
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%205.png?raw=true)
+
 </details>
 
 <details>
@@ -278,15 +257,10 @@ SELECT
 FROM DaneMiesieczne
 ORDER BY miesiac;
 ```
-**Poglądowy wynik analizy (Top 5 rekordów):**
+**Pełny wynik zapytania:**
 
-| miesiac | suma_kwoty | suma_poprzedni_miesiac | zmiana_procentowa_mom |
-| :--- | :--- | :--- | :--- |
-| **2025-01-01** | 1378372 | NULL | NULL |
-| **2025-02-01** | 1027472 | 1378372 | -25,46 |
-| **2025-03-01** | 1305784 | 1027472 | 27,09 |
-| **2025-04-01** | 1386010 | 1305784 | 6,14 |
-| **2025-05-01** | 1440028 | 1386010 | 3,9 |
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%206.png?raw=true)
+
 </details>
 
 <details>
@@ -320,18 +294,13 @@ SELECT
 	kwota
 FROM RankingTransakcji
 WHERE pozycja_w_miescie <= 3
-	AND miasto_transakcji NOT LIKE 'Online%'
+	AND miasto_transakcji <> 'Online / Brak danych'
 ORDER BY MAX(kwota) OVER (PARTITION BY miasto_transakcji) DESC, miasto_transakcji, pozycja_w_miescie;
 ```
-**Poglądowy wynik analizy (Top 5 rekordów):**
+**Top 12 wyników:**
 
-| miasto_transakcji | pozycja_w_miescie | transakcja_id | klient_id | kwota |
-| :--- | :--- | :--- | :--- | :--- |
-| **Mikołów** | 1 | 535873 | 38 | 27594,32 |
-| **Mikołów** | 2 | 502274 | 164 | 17730,14 |
-| **Mikołów** | 3 | 502801 | 623 | 16924 |
-| **Tychy** | 1 | 542405 | 485 | 26607,99 |
-| **Tychy** | 2 | 522882 | 939 | 23296,41 |
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%207.png?raw=true)
+
 </details>
 
 <details>
@@ -347,7 +316,7 @@ ORDER BY MAX(kwota) OVER (PARTITION BY miasto_transakcji) DESC, miasto_transakcj
 ```sql
 SELECT
 	k.klient_id,
-	k.imie || ' ' || k.nazwisko AS pelne_nazwisko,
+	CONCAT(k.imie, ' ', k.nazwisko) AS pelne_nazwisko,
 	ROUND(SUM(CASE WHEN k.miasto_rodzinne = t.miasto_transakcji THEN t.kwota ELSE 0 END), 0) AS wydatki_lokalne,
 	ROUND(SUM(CASE WHEN k.miasto_rodzinne <> t.miasto_transakcji THEN t.kwota ELSE 0 END), 0) AS wydatki_mobilne,
 	ROUND(SUM(CASE WHEN k.miasto_rodzinne <> t.miasto_transakcji THEN t.kwota ELSE 0 END) * 100 / NULLIF(SUM(t.kwota), 0), 2) AS procent_wydatkow_mobilnych
@@ -355,19 +324,14 @@ FROM v_CzysteTransakcje t
 JOIN TabelaKonta ko ON t.konto_id = ko.konto_id
 JOIN TabelaKlienci k ON ko.klient_id = k.klient_id
 WHERE t.status_transakcji = 'Zakonczona'
-	AND t.miasto_transakcji NOT LIKE 'Online%'
+	AND t.miasto_transakcji <> 'Online / Brak danych'
 GROUP BY k.klient_id, k.imie, k.nazwisko
 ORDER BY procent_wydatkow_mobilnych DESC;
 ```
-**Poglądowy wynik analizy (Top 5 rekordów):**
+**Top 10 wyników:**
 
-| klient_id | pelne_nazwisko | wydatki_lokalne | wydatki_mobilne | procent_wydatkow_mobilnych |
-| :--- | :--- | :--- | :--- | :--- |
-| **523** | Małgorzata Wieczorek | 345 | 20971 | 98,38 |
-| **95** | Aleksandra Nowak | 503 | 28167 | 98,24 |
-| **786** | Małgorzata Krawczyk | 642 | 21668 | 97,12 |
-| **554** | Adam Pawłowski | 705 | 18755 | 96,38 |
-| **946** | Marcin Adamczyk | 853 | 21332 | 96,15 |
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%208.png?raw=true)
+
 </details>
 
 <details>
@@ -382,18 +346,18 @@ ORDER BY procent_wydatkow_mobilnych DESC;
 **Kod SQL:**
 ```sql
 WITH TransakcjeZHistoria AS (
-	SELECT
+	SELECT 
 		k.klient_id,
 		t.data_transakcji AS podejrzana_transakcja,
 		t.kraj_transakcji AS kraj_podejrzanej_transakcji,
 		t.kwota AS kwota_podejrzanej_transakcji,
-		LAG(t.data_transakcji) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji) AS poprzednia_transakcja,
-		LAG(t.kraj_transakcji) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji) AS kraj_poprzedniej_transakcji,
-		LAG(t.kwota) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji) AS kwota_poprzedniej_transakcji
+		LAG(t.data_transakcji) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji, t.transakcja_id) AS poprzednia_transakcja,
+		LAG(t.kraj_transakcji) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji, t.transakcja_id) AS kraj_poprzedniej_transakcji,
+		LAG(t.kwota) OVER (PARTITION BY k.klient_id ORDER BY t.data_transakcji, t.transakcja_id) AS kwota_poprzedniej_transakcji
 	FROM v_CzysteTransakcje t
 	JOIN TabelaKonta ko ON t.konto_id = ko.konto_id
 	JOIN TabelaKlienci k ON ko.klient_id = k.klient_id
-	WHERE t.kraj_transakcji NOT LIKE '%online%'
+	WHERE t.kraj_transakcji <> 'Transakcja Online - nieznany'
 )
 SELECT
 	klient_id,
@@ -408,15 +372,10 @@ WHERE kraj_podejrzanej_transakcji <> kraj_poprzedniej_transakcji
 	AND DATEDIFF(minute, poprzednia_transakcja, podejrzana_transakcja) BETWEEN 1 AND 59
 ORDER BY kwota_podejrzanej_transakcji DESC;
 ```
-**Poglądowy wynik analizy (Top 5 rekordów):**
+**Pełny wynik zapytania:**
 
-| klient_id | podejrzana_transakcja | kraj_podejrzanej_transakcji | kwota_podejrzanej_transakcji | poprzednia_transakcja | kraj_poprzedniej_transakcji | kwota_poprzedniej_transakcji |
-| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| **27** | 2025-12-27 08:42:31 | Czechy | 13742,81 | 2025-12-27 08:23:56 | Polska | 24,15 |
-| **782** | 2025-04-11 08:05:58 | Włochy | 12164,63 | 2025-04-11 07:34:35 | Polska | 10,15 |
-| **265** | 2025-04-03 18:39:33 | Czechy | 12001,47 | 2025-04-03 18:37:10 | Polska | 18,77 |
-| **106** | 2025-06-08 13:51:29 | Włochy | 11831,06 | 2025-06-08 13:44:53 | Polska | 49,54 |
-| **783** | 2025-12-28 18:31:34 | Czechy | 4957,9 | 2025-12-28 17:54:50 | Polska | 46,39 |
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%209.png?raw=true)
+
 </details>
 
 <details>
@@ -452,15 +411,10 @@ FROM TransakcjeZeSrednia
 WHERE kwota > (srednia_kwota_kategorii * 5)
 ORDER BY krotnosc_sredniej DESC;
 ```
-**Poglądowy wynik analizy (Top 5 rekordów):**
+**Top 10 wyników:**
 
-| klient_id | transakcja_id | kategoria_wydatku | kwota | srednia_kwota_kategorii | krotnosc_sredniej |
-| :--- | :--- | :--- | :--- | :--- | :--- |
-| **955** | 522007 | Przelew | 19555,2 | 257,48 | 75,9 |
-| **677** | 503621 | Przelew | 19170,23 | 257,48 | 74,5 |
-| **38** | 535873 | Elektronika | 27594,32 | 415,69 | 66,4 |
-| **485** | 542405 | Elektronika | 26607,99 | 415,69 | 64 |
-| **750** | 542335 | Elektronika | 26509,12 | 415,69 | 63,8 |
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%2010.png?raw=true)
+
 </details>
 
 <details>
@@ -480,26 +434,21 @@ WITH DataOdniesienia AS (
 )
 SELECT
 	k.klient_id,
-	k.imie || ' ' || k.nazwisko AS pelne_nazwisko,
+	CONCAT(k.imie, ' ', k.nazwisko) AS pelne_nazwisko,
 	CONVERT(DATE, MAX(t.data_transakcji)) AS data_ostatniej_transakcji,
-	DATEDIFF(day, MAX(t.data_transakcji), d.punkt_odniesienia) AS dni_bez_aktywnosci
+	DATEDIFF(day,  MAX(t.data_transakcji), d.punkt_odniesienia) AS dni_bez_aktywnosci
 FROM v_CzysteTransakcje t
 JOIN TabelaKonta ko ON t.konto_id = ko.konto_id
 JOIN TabelaKlienci k ON ko.klient_id = k.klient_id
 CROSS JOIN DataOdniesienia d
 GROUP BY k.klient_id, k.imie, k.nazwisko, d.punkt_odniesienia
-HAVING DATEDIFF(day, MAX(t.data_transakcji), d.punkt_odniesienia) > 30
+HAVING DATEDIFF(day,  MAX(t.data_transakcji), d.punkt_odniesienia) > 30
 ORDER BY dni_bez_aktywnosci DESC;
 ```
-**Poglądowy wynik analizy (Top 5 rekordów):**
+**Pełny wynik zapytania:**
 
-| klient_id | pelne_nazwisko | data_ostatniej_transakcji | dni_bez_aktywnosci |
-| :--- | :--- | :--- | :--- |
-| **60** | Maria Jabłońska | 2025-10-27 | 65 |
-| **389** | Aleksandra Król | 2025-10-31 | 61 |
-| **912** | Michał Kaczmarek | 2025-11-04 | 57 |
-| **459** | Adam Michalski | 2025-11-20 | 41 |
-| **31** | Karolina Wójcik | 2025-11-25 | 36 |
+![image alt](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/sql_queries_screenshots/Zadanie%2011.png?raw=true)
+
 </details>
 
 ---
