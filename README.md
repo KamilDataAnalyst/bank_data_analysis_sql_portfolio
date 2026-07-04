@@ -61,44 +61,45 @@ Projekt podzieliłem na kolejne etapy – od importu surowych plików `.csv`, pr
 ---
 
 ## 📂 Project Structure & Core Analyses
-Prace nad projektem zostały podzielone na trzy dedykowane bloki analityczne. Każde zadanie reprezentuje osobne wyzwanie biznesowe, symulując realne zgłoszenia od działów biznesowych, marketingu czy bezpieczeństwa.
+
+Całą analizę podzieliłem na trzy bloki tematyczne. Każde zadanie opiera się na realnych wyzwaniach biznesowych, z jakimi na co dzień mierzą się działy marketingu, finansów czy bezpieczeństwa w bankowości.
 
 ### 🗺️ Spis zadań i bloków tematycznych:
 
 <details>
-<summary><b>👤 Blok I: Profilowanie i Segmentacja Bazy Klientów (Zadania 1-4)</b></summary>
+<summary><b>👤 Blok I: Profilowanie i segmentacja bazy klientów (Zadania 1–4)</b></summary>
 
-* [**Zadanie 1**: Rentowność prowizyjna i wolumen transakcji per miasto](#zadanie-1)
-* [**Zadanie 2**: Liczba i suma transakcji w podziale na godziny w ciągu doby](#zadanie-2)
-* [**Zadanie 3**: Top 10 najbardziej dochodowych klientów](#zadanie-3)
-* [**Zadanie 4**: Porównanie segmentów klientów Standard, Premium i VIP](#zadanie-4)
+* [**Zadanie 1**: Przychody z prowizji i liczba transakcji w miastach](#zadanie-1)
+* [**Zadanie 2**: Aktywność transakcyjna klientów w ciągu doby (podział na godziny)](#zadanie-2)
+* [**Zadanie 3**: TOP 10 najbardziej dochodowych klientów](#zadanie-3)
+* [**Zadanie 4**: Porównanie segmentów klientów (Standard, Premium, VIP)](#zadanie-4)
 </details>
 
 <details>
-<summary><b>💰 Blok II: Analiza Finansowa i Zachowania Transakcyjne (Zadania 5-8)</b></summary>
+<summary><b>💰 Blok II: Analiza finansowa i zachowania transakcyjne (Zadania 5–8)</b></summary>
 
-* [**Zadanie 5**: Udział procentowy metod płatności](#zadanie-5)
-* [**Zadanie 6**: Łączna suma wydatków klientów w ujęciu chronologicznym miesiąc do miesiąca (MoM)](#zadanie-6)
+* [**Zadanie 5**: Procentowy udział metod płatności](#zadanie-5)
+* [**Zadanie 6**: Zmiana wydatków klientów w czasie (ujęcie miesiąc do miesiąca – MoM)](#zadanie-6)
 * [**Zadanie 7**: Ranking TOP 3 największych transakcji dla każdego miasta](#zadanie-7)
-* [**Zadanie 8**: Analiza mobilności klientów (wydatki lokalne vs mobilne)](#zadanie-8)
+* [**Zadanie 8**: Mobilność klientów (porównanie wydatków lokalnych i zamiejscowych)](#zadanie-8)
 </details>
 
 <details>
-<summary><b>🛡️ Blok III: Zaawansowana Analityka i Detekcja Anomalii (Zadania 9-11)</b></summary>
+<summary><b>🛡️ Blok III: Bezpieczeństwo i detekcja anomalii (Zadania 9–11)</b></summary>
 
-* [**Zadanie 9**: System Antyfraudowy (Wykrywanie podejrzanych transakcji transgranicznych)](#zadanie-9)
-* [**Zadanie 10**: Detekcja Anomalii (Wykrywanie transakcji rażąco odbiegających od średniej kategorii)](#zadanie-10)
-* [**Zadanie 11**: Analiza Retencji (Identyfikacja klientów zagrożonych odejściem)](#zadanie-11)
+* [**Zadanie 9**: System Antyfraudowy (wykrywanie podejrzanych transakcji zagranicznych)](#zadanie-9)
+* [**Zadanie 10**: Detekcja anomalii (wydatki odbiegające od średniej)](#zadanie-10)
+* [**Zadanie 11**: Analiza retencji (klienci zagrożeni odejściem z banku)](#zadanie-11)
 </details>
 
-*(Dla każdego z powyższych zadań poniżej znajduje się pełny opis biznesowy, kod SQL, poglądowy wynik SSMS z wynikami oraz kluczowe wnioski analityczne).*
+*(Każde z powyższych zadań zawiera opis biznesowy, kod SQL, zrzut ekranu z SSMS oraz moje wnioski.)*
 
 ---
 
 ## 🚀 Detailed Tasks & Queries
 
 <details>
-<summary><a id="zadanie-1"></a>📌 <b>Zadanie 1</b>: Rentowność prowizyjna i wolumen transakcji per miasto</summary>
+<summary><a id="zadanie-1"></a>📌 <b>Zadanie 1</b>: Przychody z prowizji i liczba transakcji w miastach</summary>
 <br>
 
 **Opis biznesowy:** Analiza zakończonych sukcesem transakcji stacjonarnych w ujęciu geograficznym. Celem jest określenie łącznego obrotu, średniej wartości koszyka zakupowego oraz zysku banku z prowizji (0.2%) za płatności kartą w poszczególnych miastach.
@@ -127,7 +128,7 @@ ORDER BY zysk_banku_prowizja_z_karty DESC;
 </details>
 
 <details>
-<summary><a id="zadanie-2"></a>📌 <b>Zadanie 2</b>: Liczba i suma transakcji w podziale na godziny w ciągu doby</summary>
+<summary><a id="zadanie-2"></a>📌 <b>Zadanie 2</b>: Aktywność transakcyjna klientów w ciągu doby (podział na godziny)</summary>
 <br>
 
 **Opis biznesowy:** Analiza liczby oraz wolumenu transakcji w ujęciu godzinowym. Celem jest identyfikacja godzin szczytowego obciążenia systemu, co pozwala zoptymalizować okna serwisowe i dostosować wydajność infrastruktury bankowej do okresów największej aktywności klientów.
@@ -152,7 +153,7 @@ ORDER BY laczna_kwota DESC;
 </details>
 
 <details>
-<summary><a id="zadanie-3"></a>📌 <b>Zadanie 3</b>: Top 10 najbardziej dochodowych klientów</summary>
+<summary><a id="zadanie-3"></a>📌 <b>Zadanie 3</b>: TOP 10 najbardziej dochodowych klientów</summary>
 <br>
 
 **Opis biznesowy:** Identyfikacja kluczowych klientów (VIP) generujących największy obrót na kontach bankowych. Analiza sumy uregulowanych transakcji pozwala wyodrębnić segment użytkowników o najwyższej wartości dla instytucji, co umożliwia przygotowanie spersonalizowanych ofert premium oraz programów lojalnościowych.
@@ -181,7 +182,7 @@ ORDER BY laczna_kwota_transakcji DESC;
 </details>
 
 <details>
-<summary><a id="zadanie-4"></a>📌 <b>Zadanie 4</b>: Porównanie segmentów klientów Standard, Premium i VIP</summary>
+<summary><a id="zadanie-4"></a>📌 <b>Zadanie 4</b>: Porównanie segmentów klientów (Standard, Premium, VIP)</summary>
 <br>
 
 **Opis biznesowy:** Kompleksowe zestawienie segmentów użytkowników w celu weryfikacji ich realnej wartości biznesowej. Analiza pozwala ocenić strukturę bazy klienckiej oraz porównać wolumeny finansowe, średnią wartość transakcji i częstotliwość transakcji pomiędzy grupami Standard, Premium i VIP, co stanowi podstawę do optymalizacji strategii produktowej.
@@ -212,7 +213,7 @@ ORDER BY laczna_kwota DESC;
 </details>
 
 <details>
-<summary><a id="zadanie-5"></a>📌 <b>Zadanie 5</b>: Udział procentowy metod płatności</summary>
+<summary><a id="zadanie-5"></a>📌 <b>Zadanie 5</b>: Procentowy udział metod płatności</summary>
 <br>
 
 **Opis biznesowy:** Analiza struktury wykorzystania kanałów płatności przez klientów banku. Określenie procentowego udziału poszczególnych metod (np. BLIK, Karta, Przelew) w łącznej liczbie zrealizowanych transakcji pozwala zrozumieć preferencje użytkowników, co jest kluczowe dla rozwoju aplikacji mobilnej oraz negocjacji stawek interchange z organizacjami płatniczymi.
@@ -238,7 +239,7 @@ ORDER BY udzial_procentowy DESC;
 </details>
 
 <details>
-<summary><a id="zadanie-6"></a>📌 <b>Zadanie 6</b>: Łączna suma wydatków klientów w ujęciu chronologicznym miesiąc do miesiąca (MoM)</summary>
+<summary><a id="zadanie-6"></a>📌 <b>Zadanie 6</b>: Zmiana wydatków klientów w czasie (ujęcie miesiąc do miesiąca – MoM)</summary>
 <br>
 
 **Opis biznesowy:** Analiza trendu dynamiki wydatków klientów w ujęciu miesięcznym (Month-over-Month). Wykorzystanie funkcji okna pozwala na bezpośrednie porównanie łącznego wolumenu transakcji z miesiąca na miesiąc oraz wyznaczenie procentowego wskaźnika zmiany, co jest kluczowe dla identyfikacji sezonowości w zachowaniach płatniczych oraz prognozowania płynności finansowej.
@@ -310,7 +311,7 @@ ORDER BY MAX(kwota) OVER (PARTITION BY miasto_transakcji) DESC, miasto_transakcj
 </details>
 
 <details>
-<summary><a id="zadanie-8"></a>📌 <b>Zadanie 8</b>: Analiza mobilności klientów (wydatki lokalne vs mobilne)</summary>
+<summary><a id="zadanie-8"></a>📌 <b>Zadanie 8</b>: Mobilność klientów (porównanie wydatków lokalnych i zamiejscowych)</summary>
 <br>
 
 **Opis biznesowy:** Ocena poziomu migracji i mobilności klientów poprzez porównanie wolumenu transakcji realizowanych w ich miastach rodzinnych z wydatkami w pozostałych lokalizacjach stacjonarnych (z wykluczeniem transakcji internetowych). Wynik pozwala wyodrębnić segment użytkowników „podróżujących”, co umożliwia precyzyjne targetowanie ofert związanych z ubezpieczeniami turystycznymi, kontami walutowymi czy programami partnerskimi na stacjach paliw.
@@ -341,7 +342,7 @@ ORDER BY procent_wydatkow_mobilnych DESC;
 </details>
 
 <details>
-<summary><a id="zadanie-9"></a>📌 <b>Zadanie 9</b>: System Antyfraudowy (Wykrywanie podejrzanych transakcji transgranicznych)</summary>
+<summary><a id="zadanie-9"></a>📌 <b>Zadanie 9</b>: System Antyfraudowy (wykrywanie podejrzanych transakcji zagranicznych)</summary>
 <br>
 
 **Opis biznesowy:** Algorytm detekcji nadużyć finansowych (Anti-Fraud) identyfikujący niemożliwe z fizycznego punktu widzenia zachowania użytkowników (tzw. *velocity checks*). Analiza wyszukuje pary transakcji stacjonarnych zrealizowanych na tym samym koncie w odstępie krótszym niż godzina, ale w różnych krajach. Taka sytuacja jednoznacznie wskazuje na wysokie ryzyko przejęcia danych karty lub sklonowania paska magnetycznego, wymagając natychmiastowej blokady prewencyjnej.
@@ -385,7 +386,7 @@ ORDER BY kwota_podejrzanej_transakcji DESC;
 </details>
 
 <details>
-<summary><a id="zadanie-10"></a>📌 <b>Zadanie 10</b>: Detekcja Anomalii (Wykrywanie transakcji rażąco odbiegających od średniej kategorii)</summary>
+<summary><a id="zadanie-10"></a>📌 <b>Zadanie 10</b>: Detekcja anomalii (wydatki odbiegające od średniej)</summary>
 <br>
 
 **Opis biznesowy:** Zaawansowana analiza statystyczna ukierunkowana na wykrywanie nietypowych zachowań finansowych (Anomaly Detection). Zapytanie identyfikuje transakcje, których wartość ponad pięciokrotnie przewyższa średnią kwotę operacji w danej kategorii wydatków. Narzędzie to pozwala wyłapywać błędy systemowe, nietypowe zakupy luksusowe oraz potencjalne nadużycia, zanim wpłyną one na zaburzenie globalnych statystyk raportowych.
@@ -424,7 +425,7 @@ ORDER BY krotnosc_sredniej DESC;
 </details>
 
 <details>
-<summary><a id="zadanie-11"></a>📌 <b>Zadanie 11</b>: Analiza Retencji (Identyfikacja klientów zagrożonych odejściem)</summary>
+<summary><a id="zadanie-11"></a>📌 <b>Zadanie 11</b>: Analiza retencji (klienci zagrożeni odejściem z banku)</summary>
 <br>
 
 **Opis biznesowy:** Analiza wskaźnika retencji (Churn Analysis) nastawiona na prewencyjne wykrywanie klientów pasywnych, u których brak aktywności transakcyjnej przekracza 30 dni względem ostatniej daty w bazie danych. Wykorzystanie złączenia krzyżowego (`CROSS JOIN`) do dynamicznego wyznaczenia punktu odniesienia pozwala precyzyjnie określić czas trwania bezczynności, co umożliwia działom CRM podjęcie natychmiastowych działań reaktywacyjnych (np. poprzez dedykowane kampanie mailingowe lub oferty specjalne).
