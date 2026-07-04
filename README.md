@@ -1,56 +1,62 @@
 # 🏦 Bank Data Analysis Project – SQL Portfolio
 
 ## 📝 Project Overview
-Niniejsze repozytorium zawiera autorski projekt analityczny, którego celem jest kompleksowa analiza struktury danych oraz zachowań klientów fikcyjnego banku komercyjnego. Projekt opiera się na bazie danych przechowującej informacje o użytkownikach, ich kontach oraz realizowanych transakcjach finansowych. 
-
-Wszystkie zapytania oraz analizy zostały przygotowane w środowisku **MS SQL**.
+Projekt powstał po to, aby wyciągnąć kluczowe wnioski biznesowe z danych bankowych. Analizowałem profile użytkowników, ich konta oraz historię operacji finansowych. Całość zrealizowałem za pomocą MS SQL.
 
 ---
 
 ## 🎯 Business Context & Goal
-W codziennej pracy analityka danych w sektorze bankowym rzadko otrzymuje się precyzyjne instrukcje krok po kroku. Najczęściej punktem wyjścia jest ogólny problem biznesowy lub potrzeba monitorowania procesów. 
+Zamiast opierać się na gotowych przykładach, chciałem zmierzyć się z problemami, z którymi banki faktycznie spotykają się na co dzień. Dlatego pracowałem na surowych logach transakcyjnych i przygotowałem analizy, które mogłyby pomóc w podejmowaniu decyzji biznesowych.
 
-Głównym celem tego projektu było wejście w rolę **analityka-detektywa**, który za pomocą zaawansowanych struktur SQL przekształca surowe logi transakcyjne w gotową wartość biznesową. Analiza skupia się na trzech kluczowych obszarach:
-1. **Segmentacja i profilowanie klientów** – zrozumienie struktury demograficznej bazy użytkowników banku.
-2. **Optymalizacja metryk finansowych** – identyfikacja trendów w wydatkach i aktywności na kontach.
-3. **Cyberbezpieczeństwo i detekcja anomalii** – wykrywanie niestandardowych operacji mogących świadczyć o oszustwach (Fraud Detection).
-
+Skupiłem się na trzech głównych obszarach:
+* **Profilowanie klientów** – sprawdziłem, jak wyglądają grupy klientów pod względem wieku, płci i innych cech demograficznych.
+* **Metryki finansowe** – przeanalizowałem wzorce wydatków oraz aktywność na kontach, aby zidentyfikować najważniejsze trendy.
+* **Wykrywanie oszustw (Fraud Detection)** – wyszukiwałem transakcje odbiegające od typowych zachowań, które mogły wskazywać na potencjalne nadużycia.
 ---
 
 ## 🛠️ Tech Stack & SQL Techniques
-Projekt demonstruje znajomość zaawansowanej składni SQL oraz dobrych praktyk zapisu kodu (dbających o czytelność dla zespołu).
 
-* **Database Engine:** Microsoft SQL Server
-* **Zaawansowane techniki SQL wykorzystane w projekcie:**
-  * **Zaawansowane czyszczenie i standaryzacja danych:** Budowanie własnej logiki transformacji tekstu w T-SQL (użycie funkcji `UPPER`, `LEFT`, `LOWER`, `SUBSTRING` oraz `LEN` do formatowania nazw miejscowości w styl *Capital Case*).
-  * **Tworzenie i optymalizacja Widoków (`VIEWS`):** Wykorzystanie widoków jako bezpiecznej warstwy abstrakcji oddzielającej surowe dane od zapytań raportowych.
-  * **Obsługa wartości brakujących:** Zarządzanie wartościami `NULL` przy użyciu funkcji warunkowych, zapewniające spójność wyliczeń.
-  * **Wspólne Wyrażenia Tablicowe (`CTE - Common Table Expressions`):** Stosowane do modułowego i czytelnego rozbijania złożonych problemów logicznych.
-  * **Funkcje Okna (`Window Functions`):** Używane do kalkulacji pozycji w rankingach oraz zaawansowanej analizy kontekstowej i porównawczej wewnątrz kategorii wydatków.
-  * **Relacyjność i wielopoziomowe złączenia (Multi-level JOINs):** Efektywne łączenie tabel w strukturach relacyjnych z wykorzystaniem `INNER JOIN`. Wykorzystanie tabeli wymiaru `Konta` jako kluczowego pośrednika (tabeli mapującej) do odtworzenia pełnego kontekstu biznesowego i połączenia logów transakcyjnych bezpośrednio z profilami demograficznymi klientów.
-  * **Agregacje i Filtrowanie zaawansowane:** Wykorzystanie `GROUP BY` oraz `HAVING` z wielopoziomowymi warunkami logicznymi.
+### Zastosowane rozwiązania
+
+* **Czyszczenie i standaryzacja danych** – opracowałem logikę czyszczenia danych tekstowych z wykorzystaniem funkcji `UPPER`, `LOWER`, `LEFT`, `SUBSTRING` oraz `LEN`. Dzięki temu nazwy miejscowości zostały zapisane w jednolitym formacie (pierwsza litera wielka, pozostałe małe), co poprawiło spójność danych.
+
+* **Widoki (Views)** – utworzyłem widoki, które oddzielają surowe dane od zapytań analitycznych. Dzięki temu kod jest bardziej przejrzysty, łatwiejszy do utrzymania i można go ponownie wykorzystać w kolejnych analizach.
+
+* **Obsługa brakujących wartości** – w miejscach, gdzie występowały wartości `NULL`, zastosowałem odpowiednią logikę warunkową, aby zachować poprawność obliczeń i uniknąć błędów w analizach.
+
+* **Common Table Expressions (CTE)** – wykorzystałem CTE do podziału bardziej złożonych zapytań na mniejsze, czytelniejsze etapy. Takie podejście ułatwia analizę kodu oraz jego dalszą rozbudowę.
+
+* **Window Functions (Funkcje okna)** – zastosowałem funkcje okna do tworzenia rankingów oraz analiz porównawczych wewnątrz poszczególnych kategorii wydatków, bez konieczności tworzenia dodatkowych tabel.
+
+* **Relacyjność i wielopoziomowe złączenia** – dane zostały połączone za pomocą `INNER JOIN`, wykorzystując tabelę `Accounts` jako tabelę pośredniczącą pomiędzy klientami a logami transakcyjnymi. Pozwoliło to powiązać każdą transakcję z danymi klienta i jego kontem.
+
+* **Agregacje i filtrowanie danych** – do tworzenia zestawień wykorzystałem `GROUP BY` oraz `HAVING`, co umożliwiło analizę zagregowanych danych i filtrowanie wyników na podstawie określonych warunków.
 
 ---
 
 ## 📊 Data Model & Database Structure
-Analiza została przeprowadzona na relacyjnej bazie danych składającej się z trzech kluczowych tabel, które symulują realny system bankowości rdzeniowej (Core Banking):
+Pracowałem na relacyjnej bazie danych składającej się z trzech tabel, które odzwierciedlają strukturę prawdziwego systemu bankowego:
 
 * `Klienci` [Tabela Wymiaru] – zawiera unikalne, stałe profile klientów banku (1 000 wierszy).  
   * *Kolumny:* (`klient_id`, `imie`, `nazwisko`, `miasto_rodzinne`, `data_urodzenia`, `segment_klienta`)
-* `Konta` [Tabela Wymiaru] – przechowuje informacje o rachunkach i mapuje relacje klient-konto (1 500 wierszy).  
+* `Konta` [Tabela Wymiaru] – przechowuje informacje o rachunkach i łączy je z klientami (1 500 wierszy).  
   * *Kolumny:* (`konto_id`, `klient_id`, `typ_konta`, `waluta`, `data_otwarcia`)
-* `Transakcje` [Tabela Faktów] – rejestruje każdy pojedynczy, historyczny ruch finansowy w systemie (50 000 wierszy).  
+* `Transakcje` [Tabela Faktów] – zawiera historię wszystkich transakcji wykonanych przez klientów w systemie (50 000 wierszy).  
   * *Kolumny:* (`transakcja_id`, `konto_id`, `kwota`, `data_transakcji`, `kategoria_wydatku`, `metoda_platnosci`, `miasto_transakcji`, `kraj_transakcji`, `status_transakcji`)
 
 ---
 
 ## ⚙️ Repository Structure & Data Pipeline (ETL)
-Projekt został podzielony na logiczne etapy, odzwierciedlające realny proces pracy z danymi (od surowych plików po gotowe wnioski). W repozytorium znajdują się źródłowe pliki `.csv` oraz skrypty SQL, które należy uruchamiać w poniższej kolejności:
 
-1. [`01_import_and_fixes.sql`](./01_import_and_fixes.sql) – **Dostosowanie typów danych po imporcie:** Rozwiązanie problemów z domyślnym mapowaniem typów przez kreator importu MS SQL Server. Jawna konwersja kolumn za pomocą instrukcji `ALTER COLUMN` (m.in. zmiana kwot na `FLOAT`, dat na precyzyjny format `DATETIME2` oraz identyfikatorów na `INT`), umożliwiająca poprawne wykonywanie operacji matematycznych i agregacji czasowych w dalszych etapach.
-2. [`02_create_views.sql`](./02_create_views.sql) – **Warstwa standaryzacji i czyszczenia (Data Cleaning Views):** Utworzenie widoków bazodanowych zapewniających spójność danych przed analizą. W tej warstwie zrealizowano m.in. standaryzację danych tekstowych (ujednolicenie wielkości liter w nazwach miast transakcji w celu uniknięcia sztucznego duplikowania grup w agregacjach), obsługę potencjalnych wartości pustych (`NULL`) oraz odcięcie rekordów niespełniających kryteriów biznesowych.
-3. [`03_analysis_queries.sql`](./03_analysis_queries.sql) – **Warstwa analityczna:** Skrypt zawierający 11 zaawansowanych biznesowych zapytań SQL, podzielonych na dedykowane bloki tematyczne.
-4. [`/data`](./data) – folder zawierający źródłowe pliki `.csv` (Klienci, Konta, Transakcje), na których bazuje cały projekt.
+Projekt podzieliłem na kolejne etapy – od importu surowych plików `.csv`, przez przygotowanie danych, aż po końcową analizę. W repozytorium znajdują się pliki źródłowe oraz skrypty SQL, które najlepiej uruchamiać w poniższej kolejności:
+
+1. **[01_import_and_fixes.sql](01_import_and_fixes.sql)** – **Porządkowanie typów danych:** Po imporcie danych poprawiłem typy kolumn przypisane automatycznie przez kreator SQL Server. Zmieniłem kwoty na `FLOAT`, daty na `DATETIME2`, a identyfikatory na `INT`, dzięki czemu dalsze obliczenia i analizy działają poprawnie.
+
+2. **[02_create_views.sql](02_create_views.sql)** – **Przygotowanie czystych widoków:** Utworzyłem widoki bazodanowe odpowiedzialne za czyszczenie i standaryzację danych przed analizą. W tym kroku ujednoliciłem wielkość liter w nazwach miast (żeby te same miejscowości nie zliczały się osobno), obsłużyłem wartości `NULL` oraz odfiltrowałem rekordy niespełniające przyjętych kryteriów biznesowych.
+
+3. **[03_analysis_queries.sql](03_analysis_queries.sql)** – **Właściwa analiza:** Skrypt zawiera 11 zapytań SQL podzielonych na trzy główne obszary: profilowanie klientów, analizę metryk finansowych oraz wykrywanie potencjalnych nadużyć (Fraud Detection).
+
+4. **[/data](/data)** – Folder zawierający źródłowe pliki `.csv` (`Klienci`, `Konta`, `Transakcje`), na których opiera się cały projekt.
 
 ---
 
