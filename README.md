@@ -102,10 +102,11 @@ Całą analizę podzieliłem na trzy bloki tematyczne. Każde zadanie opiera si�
 <summary><a id="zadanie-1"></a>📌 <b>Zadanie 1</b>: Przychody z prowizji i liczba transakcji w miastach</summary>
 <br>
 
-**Opis biznesowy:** Analiza zakończonych sukcesem transakcji stacjonarnych w ujęciu geograficznym. Celem jest określenie łącznego obrotu, średniej wartości koszyka zakupowego oraz zysku banku z prowizji (0.2%) za płatności kartą w poszczególnych miastach.
+**Opis biznesowy:**  
+Analiza udanych transakcji stacjonarnych w podziale na miasta. Celem było sprawdzenie łącznego obrotu, średniej wartości koszyka oraz zysku banku z prowizji (0.2%) za płatności kartą w konkretnych lokalizacjach.
 
-### 💡 Kluczowy wniosek (Insight)
-**Zapytanie precyzyjnie wskazuje lokalizacje generujące najwyższy strumień przychodów prowizyjnych, co pozwala działowi marketingu optymalizować budżety na lokalne kampanie partnerskie i targetować najbardziej dochodowe regiony.**
+### 💡 Wniosek
+Zapytanie jasno pokazuje, które miasta przynoszą bankowi największy zysk z prowizji. Dla działu marketingu to gotowa podpowiedź, gdzie warto ulokować budżet na lokalne kampanie reklamowe czy współpracę z partnerami.
 
 **Kod SQL:**
 ```sql
