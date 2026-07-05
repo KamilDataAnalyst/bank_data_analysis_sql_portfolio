@@ -14,6 +14,18 @@ Skupiłem się na trzech głównych obszarach:
 * **Wykrywanie oszustw (Fraud Detection)** – wyszukiwałem transakcje odbiegające od typowych zachowań, które mogły wskazywać na potencjalne nadużycia.
 ---
 
+## 🔗 Database schema
+
+<details>
+<summary>Kliknij, aby zobaczyć diagram bazy</summary>
+<br>
+
+![Database schema](https://github.com/KamilDataAnalyst/bank_data_analysis_sql_portfolio/blob/main/data_model_diagram.png?raw=true))
+
+</details>
+
+---
+
 ## 🛠️ Tech Stack & SQL Techniques
 
 ### Zastosowane rozwiązania
