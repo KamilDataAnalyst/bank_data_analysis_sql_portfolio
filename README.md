@@ -492,4 +492,4 @@ Projekt pozwolił na przekształcenie ponad 50 000 surowych rekordów transakcyj
    * `03_analysis_queries.sql` (główne zapytania analityczne i raportowe)
 
 ---
-*Całość napisałem i udokumentowałem sam, traktując ten projekt jako główny element mojego portfolio data analyst."*
+*Całość napisałem i udokumentowałem sam, traktując ten projekt jako główny element mojego portfolio data analyst.*
