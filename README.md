@@ -62,13 +62,15 @@ Pracowałem na relacyjnej bazie danych składającej się z trzech tabel, które
 
 Projekt podzieliłem na kolejne etapy – od importu surowych plików `.csv`, przez przygotowanie danych, aż po końcową analizę. W repozytorium znajdują się pliki źródłowe oraz skrypty SQL, które najlepiej uruchamiać w poniższej kolejności:
 
-1. **[01_import_and_fixes.sql](01_import_and_fixes.sql)** – **Porządkowanie typów danych:** Po imporcie danych poprawiłem typy kolumn przypisane automatycznie przez kreator SQL Server. Zmieniłem kwoty na `FLOAT`, daty na `DATETIME2`, a identyfikatory na `INT`, dzięki czemu dalsze obliczenia i analizy działają poprawnie.
+1. **[/data](/data)** – Folder zawierający źródłowe pliki `.csv` (`Klienci`, `Konta`, `Transakcje`), na których opiera się cały projekt.
 
-2. **[02_create_views.sql](02_create_views.sql)** – **Przygotowanie czystych widoków:** Utworzyłem widoki bazodanowe odpowiedzialne za czyszczenie i standaryzację danych przed analizą. W tym kroku ujednoliciłem wielkość liter w nazwach miast (żeby te same miejscowości nie zliczały się osobno), obsłużyłem wartości `NULL` oraz odfiltrowałem rekordy niespełniające przyjętych kryteriów biznesowych.
+2. **[01_import_and_fixes.sql](01_import_and_fixes.sql)** – **Porządkowanie typów danych:** Po imporcie danych poprawiłem typy kolumn przypisane automatycznie przez kreator SQL Server. Zmieniłem kwoty na `FLOAT`, daty na `DATETIME2`, a identyfikatory na `INT`, dzięki czemu dalsze obliczenia i analizy działają poprawnie.
 
-3. **[03_analysis_queries.sql](03_analysis_queries.sql)** – **Właściwa analiza:** Skrypt zawiera 11 zapytań SQL podzielonych na trzy główne obszary: profilowanie klientów, analizę metryk finansowych oraz wykrywanie potencjalnych nadużyć (Fraud Detection).
+3. **[02_create_views.sql](02_create_views.sql)** – **Przygotowanie czystych widoków:** Utworzyłem widoki bazodanowe odpowiedzialne za czyszczenie i standaryzację danych przed analizą. W tym kroku ujednoliciłem wielkość liter w nazwach miast (żeby te same miejscowości nie zliczały się osobno), obsłużyłem wartości `NULL` oraz odfiltrowałem rekordy niespełniające przyjętych kryteriów biznesowych.
 
-4. **[/data](/data)** – Folder zawierający źródłowe pliki `.csv` (`Klienci`, `Konta`, `Transakcje`), na których opiera się cały projekt.
+4. **[03_analysis_queries.sql](03_analysis_queries.sql)** – **Właściwa analiza:** Skrypt zawiera 11 zapytań SQL podzielonych na trzy główne obszary: profilowanie klientów, analizę metryk finansowych oraz wykrywanie potencjalnych nadużyć (Fraud Detection).
+
+
 
 ---
 
@@ -115,10 +117,10 @@ Całą analizę podzieliłem na trzy bloki tematyczne. Każde zadanie opiera si�
 <br>
 
 **Opis biznesowy:**  
-Analiza udanych transakcji stacjonarnych w podziale na miasta. Celem było sprawdzenie łącznego obrotu, średniej wartości koszyka oraz zysku banku z prowizji (0.2%) za płatności kartą w konkretnych lokalizacjach.
+Analiza udanych transakcji stacjonarnych w podziale na miasta. Celem było sprawdzenie łącznego obrotu, średniej wartości koszyka oraz zysku banku z prowizji (0.2%) od płatności kartą w poszczególnych lokalizacjach.
 
-### 💡 Wniosek
-Zapytanie jasno pokazuje, które miasta przynoszą bankowi największy zysk z prowizji. Dla działu marketingu to gotowa podpowiedź, gdzie warto ulokować budżet na lokalne kampanie reklamowe czy współpracę z partnerami.
+**💡 Wniosek:**  
+Zapytanie pokazuje, które miasta generują dla banku największy zysk z prowizji. Takie informacje mogą pomóc przy planowaniu lokalnych kampanii marketingowych lub nawiązywaniu współpracy z partnerami.
 
 **Kod SQL:**
 ```sql
@@ -144,10 +146,11 @@ ORDER BY zysk_banku_prowizja_z_karty DESC;
 <summary><a id="zadanie-2"></a>📌 <b>Zadanie 2</b>: Aktywność transakcyjna klientów w ciągu doby (podział na godziny)</summary>
 <br>
 
-**Opis biznesowy:** Analiza liczby oraz wolumenu transakcji w ujęciu godzinowym. Celem jest identyfikacja godzin szczytowego obciążenia systemu, co pozwala zoptymalizować okna serwisowe i dostosować wydajność infrastruktury bankowej do okresów największej aktywności klientów.
+**Opis biznesowy:**  
+Analiza liczby i wartości transakcji w podziale na godziny. Celem było określenie godzin największej aktywności klientów oraz obciążenia systemu.
 
-### 💡 Kluczowy wniosek (Insight)
-**Zapytanie pozwala precyzyjnie zlokalizować godziny szczytu transakcyjnego, co umożliwia planowanie prac konserwacyjnych w okresach najniższego obciążenia systemu i minimalizuje ryzyko przestojów dla użytkowników.**
+**💡 Wniosek:**  
+Zapytanie pokazuje godziny największego ruchu, co pomaga planować prace serwisowe poza okresami największej aktywności klientów.
 
 **Kod SQL:**
 ```sql
@@ -169,10 +172,11 @@ ORDER BY laczna_kwota DESC;
 <summary><a id="zadanie-3"></a>📌 <b>Zadanie 3</b>: TOP 10 najbardziej dochodowych klientów</summary>
 <br>
 
-**Opis biznesowy:** Identyfikacja kluczowych klientów (VIP) generujących największy obrót na kontach bankowych. Analiza sumy uregulowanych transakcji pozwala wyodrębnić segment użytkowników o najwyższej wartości dla instytucji, co umożliwia przygotowanie spersonalizowanych ofert premium oraz programów lojalnościowych.
+**Opis biznesowy:**  
+Identyfikacja 10 klientów generujących największy obrót. Celem było znalezienie najbardziej wartościowych klientów, aby lepiej dopasować oferty premium oraz programy lojalnościowe.
 
-### 💡 Kluczowy wniosek (Insight)
-**Wskazanie konkretnych liderów obrotu finansowego pozwala działowi CRM na bezpośrednie targetowanie segmentu VIP, minimalizując ryzyko ich odejścia do konkurencji i zwiększając efektywność długofalowej polityki retencyjnej banku.**
+**💡 Wniosek:**  
+Zapytanie pokazuje, którzy klienci generują największy obrót. Takie informacje mogą pomóc w przygotowaniu ofert VIP oraz działaniach mających na celu utrzymanie najcenniejszych klientów.
 
 **Kod SQL:**
 ```sql
@@ -198,10 +202,11 @@ ORDER BY laczna_kwota_transakcji DESC;
 <summary><a id="zadanie-4"></a>📌 <b>Zadanie 4</b>: Porównanie segmentów klientów (Standard, Premium, VIP)</summary>
 <br>
 
-**Opis biznesowy:** Kompleksowe zestawienie segmentów użytkowników w celu weryfikacji ich realnej wartości biznesowej. Analiza pozwala ocenić strukturę bazy klienckiej oraz porównać wolumeny finansowe, średnią wartość transakcji i częstotliwość transakcji pomiędzy grupami Standard, Premium i VIP, co stanowi podstawę do optymalizacji strategii produktowej.
+**Opis biznesowy:**  
+Porównanie segmentów Standard, Premium i VIP pod względem liczby klientów, wartości transakcji oraz aktywności. Celem było sprawdzenie, jak różnią się poszczególne grupy i które z nich mają największą wartość dla banku.
 
-### 💡 Kluczowy wniosek (Insight)
-**Mimo że segment VIP jest najmniej liczny, jego średnia wartość transakcji drastycznie przewyższa pozostałe grupy, co potwierdza wysoką rentowność obsługi tych klientów. Z kolei zbliżona średnia liczba transakcji na klienta we wszystkich segmentach dowodzi stałego, wysokiego zaangażowania użytkowników niezależnie od ich statusu majątkowego.**
+**💡 Wniosek:**  
+Zapytanie pokazuje różnice między segmentami klientów. Dzięki temu łatwiej ocenić, które grupy generują największą wartość i lepiej dopasować do nich ofertę.
 
 **Kod SQL:**
 ```sql
@@ -229,10 +234,11 @@ ORDER BY laczna_kwota DESC;
 <summary><a id="zadanie-5"></a>📌 <b>Zadanie 5</b>: Procentowy udział metod płatności</summary>
 <br>
 
-**Opis biznesowy:** Analiza struktury wykorzystania kanałów płatności przez klientów banku. Określenie procentowego udziału poszczególnych metod (np. BLIK, Karta, Przelew) w łącznej liczbie zrealizowanych transakcji pozwala zrozumieć preferencje użytkowników, co jest kluczowe dla rozwoju aplikacji mobilnej oraz negocjacji stawek interchange z organizacjami płatniczymi.
+**Opis biznesowy:**  
+Analiza udziału poszczególnych metod płatności w liczbie wszystkich transakcji. Celem było sprawdzenie, z których metod klienci korzystają najczęściej i lepsze poznanie ich preferencji.
 
-### 💡 Kluczowy wniosek (Insight)
-**Wskazanie dominujących metod płatności pozwala bankowi optymalizować stabilność systemów transakcyjnych w najbardziej obciążonych kanałach oraz lepiej dopasować programy partnerskie i cashbackowe do realnych zachowań klientów.**
+**💡 Wniosek:**  
+Zapytanie pokazuje, które metody płatności są najpopularniejsze. Takie informacje mogą pomóc przy rozwoju usług oraz planowaniu ofert i promocji dopasowanych do klientów.
 
 **Kod SQL:**
 ```sql
@@ -255,10 +261,11 @@ ORDER BY udzial_procentowy DESC;
 <summary><a id="zadanie-6"></a>📌 <b>Zadanie 6</b>: Zmiana wydatków klientów w czasie (ujęcie miesiąc do miesiąca – MoM)</summary>
 <br>
 
-**Opis biznesowy:** Analiza trendu dynamiki wydatków klientów w ujęciu miesięcznym (Month-over-Month). Wykorzystanie funkcji okna pozwala na bezpośrednie porównanie łącznego wolumenu transakcji z miesiąca na miesiąc oraz wyznaczenie procentowego wskaźnika zmiany, co jest kluczowe dla identyfikacji sezonowości w zachowaniach płatniczych oraz prognozowania płynności finansowej.
+**Opis biznesowy:**  
+Analiza zmian wydatków klientów z miesiąca na miesiąc (MoM). Celem było sprawdzenie, jak zmienia się łączna wartość transakcji w czasie oraz wykrycie okresów wzrostu lub spadku aktywności klientów.
 
-### 💡 Kluczowy wniosek (Insight)
-**Monitorowanie wskaźnika MoM pozwala na wczesne wykrywanie anomalii rynkowych oraz okresów zwiększonej aktywności zakupowej (np. okresy przedświąteczne), co umożliwia lepsze zarządzanie kapitałem oraz odpowiednie dopasowanie terminów kampanii marketingowych.**
+**💡 Wniosek:**  
+Zapytanie pokazuje, jak zmieniają się wydatki klientów w kolejnych miesiącach. Takie informacje mogą pomóc w wykrywaniu sezonowych trendów oraz planowaniu działań marketingowych.
 
 **Kod SQL:**
 ```sql
@@ -287,10 +294,11 @@ ORDER BY miesiac;
 <summary><a id="zadanie-7"></a>📌 <b>Zadanie 7</b>: Ranking TOP 3 największych transakcji dla każdego miasta</summary>
 <br>
 
-**Opis biznesowy:** Identyfikacja najwyższych jednostkowych operacji finansowych w podziale na lokalizacje geograficzne (miasta transakcji). Zastosowanie funkcji analitycznej `DENSE_RANK()` umożliwia precyzyjne uszeregowanie transakcji i wyłonienie ścisłej czołówki dla każdego rynku lokalnego, co pozwala na analizę regionalnej siły nabywczej klientów oraz wykrywanie obszarów o największym potencjale dla usług premium.
+**Opis biznesowy:**  
+Identyfikacja trzech największych transakcji w każdym mieście. Celem było sprawdzenie, gdzie występują najwyższe pojedyncze wydatki oraz porównanie wartości transakcji pomiędzy lokalizacjami.
 
-### 💡 Kluczowy wniosek (Insight)
-**Wskazanie miast generujących najwyższe pojedyncze transakcje pozwala na optymalizację lokalnych działań marketingowych oraz dostarcza cennych danych dla systemów antyfraudowych, które mogą precyzyjniej kalibrować limity bezpieczeństwa w zależności od specyfiki danego regionu.**
+**💡 Wniosek:**  
+Zapytanie pokazuje, w których miastach pojawiają się najwyższe pojedyncze transakcje. Takie informacje mogą pomóc w analizie lokalnych rynków oraz lepszym dopasowaniu ofert premium do klientów.
 
 **Kod SQL:**
 ```sql
@@ -327,10 +335,11 @@ ORDER BY MAX(kwota) OVER (PARTITION BY miasto_transakcji) DESC, miasto_transakcj
 <summary><a id="zadanie-8"></a>📌 <b>Zadanie 8</b>: Mobilność klientów (porównanie wydatków lokalnych i zamiejscowych)</summary>
 <br>
 
-**Opis biznesowy:** Ocena poziomu migracji i mobilności klientów poprzez porównanie wolumenu transakcji realizowanych w ich miastach rodzinnych z wydatkami w pozostałych lokalizacjach stacjonarnych (z wykluczeniem transakcji internetowych). Wynik pozwala wyodrębnić segment użytkowników „podróżujących”, co umożliwia precyzyjne targetowanie ofert związanych z ubezpieczeniami turystycznymi, kontami walutowymi czy programami partnerskimi na stacjach paliw.
+**Opis biznesowy:**  
+Porównanie wydatków klientów w ich mieście zamieszkania oraz poza nim. Celem było sprawdzenie, jak często klienci dokonują transakcji poza swoją lokalizacją i lepsze zrozumienie ich aktywności.
 
-### 💡 Kluczowy wniosek (Insight)
-**Identyfikacja klientów o najwyższym odsetku wydatków poza miejscem zamieszkania pozwala na optymalizację geolokalizacyjnych powiadomień push w aplikacji mobilnej oraz dostarcza istotnych danych dla modeli oceniających ryzyko kredytowe i behawioralne.**
+**💡 Wniosek:**  
+Zapytanie pokazuje, którzy klienci najczęściej dokonują zakupów poza swoim miastem. Takie informacje mogą pomóc w przygotowaniu ofert dopasowanych do osób często podróżujących.
 
 **Kod SQL:**
 ```sql
@@ -358,10 +367,11 @@ ORDER BY procent_wydatkow_mobilnych DESC;
 <summary><a id="zadanie-9"></a>📌 <b>Zadanie 9</b>: System Antyfraudowy (wykrywanie podejrzanych transakcji zagranicznych)</summary>
 <br>
 
-**Opis biznesowy:** Algorytm detekcji nadużyć finansowych (Anti-Fraud) identyfikujący niemożliwe z fizycznego punktu widzenia zachowania użytkowników (tzw. *velocity checks*). Analiza wyszukuje pary transakcji stacjonarnych zrealizowanych na tym samym koncie w odstępie krótszym niż godzina, ale w różnych krajach. Taka sytuacja jednoznacznie wskazuje na wysokie ryzyko przejęcia danych karty lub sklonowania paska magnetycznego, wymagając natychmiastowej blokady prewencyjnej.
+**Opis biznesowy:**  
+Wykrywanie podejrzanych transakcji zagranicznych wykonanych na tym samym koncie w krótkim odstępie czasu. Celem było znalezienie sytuacji, które mogą wskazywać na próbę oszustwa lub przejęcie danych karty.
 
-### 💡 Kluczowy wniosek (Insight)
-**Wdrożenie reguł czasu rzeczywistego opartego na tym zapytaniu pozwala systemom bezpieczeństwa banku automatycznie odrzucać autoryzacje transakcji obciążonych wysokim ryzykiem fraudu, co bezpośrednio minimalizuje straty finansowe instytucji oraz podnosi poziom zaufania klientów.**
+**💡 Wniosek:**  
+Zapytanie pokazuje transakcje wymagające dodatkowej weryfikacji. Takie informacje mogą pomóc w szybszym wykrywaniu prób oszustwa i zwiększeniu bezpieczeństwa klientów.
 
 **Kod SQL:**
 ```sql
@@ -402,10 +412,11 @@ ORDER BY kwota_podejrzanej_transakcji DESC;
 <summary><a id="zadanie-10"></a>📌 <b>Zadanie 10</b>: Detekcja anomalii (wydatki odbiegające od średniej)</summary>
 <br>
 
-**Opis biznesowy:** Zaawansowana analiza statystyczna ukierunkowana na wykrywanie nietypowych zachowań finansowych (Anomaly Detection). Zapytanie identyfikuje transakcje, których wartość ponad pięciokrotnie przewyższa średnią kwotę operacji w danej kategorii wydatków. Narzędzie to pozwala wyłapywać błędy systemowe, nietypowe zakupy luksusowe oraz potencjalne nadużycia, zanim wpłyną one na zaburzenie globalnych statystyk raportowych.
+**Opis biznesowy:**  
+Wykrywanie transakcji, których wartość znacząco odbiega od średniej w danej kategorii wydatków. Celem było znalezienie nietypowych operacji, które mogą wpływać na analizę danych lub wymagać dodatkowej weryfikacji.
 
-### 💡 Kluczowy wniosek (Insight)
-**Automatyczna kategoryzacja i wyznaczanie odchyleń od normy (krotności średniej) umożliwia natychmiastowe flagowanie transakcji do ręcznej weryfikacji przez zespół operacyjny, co pozwala chronić kapitał banku oraz utrzymywać wysoką jakość danych analitycznych.**
+**💡 Wniosek:**  
+Zapytanie pozwala identyfikować wartości odstające od typowych zachowań klientów. Takie informacje mogą pomóc w wykrywaniu anomalii, błędów danych oraz nietypowych transakcji wymagających dalszej analizy.
 
 **Kod SQL:**
 ```sql
@@ -441,10 +452,11 @@ ORDER BY krotnosc_sredniej DESC;
 <summary><a id="zadanie-11"></a>📌 <b>Zadanie 11</b>: Analiza retencji (klienci zagrożeni odejściem z banku)</summary>
 <br>
 
-**Opis biznesowy:** Analiza wskaźnika retencji (Churn Analysis) nastawiona na prewencyjne wykrywanie klientów pasywnych, u których brak aktywności transakcyjnej przekracza 30 dni względem ostatniej daty w bazie danych. Wykorzystanie złączenia krzyżowego (`CROSS JOIN`) do dynamicznego wyznaczenia punktu odniesienia pozwala precyzyjnie określić czas trwania bezczynności, co umożliwia działom CRM podjęcie natychmiastowych działań reaktywacyjnych (np. poprzez dedykowane kampanie mailingowe lub oferty specjalne).
+**Opis biznesowy:**  
+Analiza aktywności klientów w celu wykrycia osób, które nie wykonały żadnej transakcji przez ponad 30 dni. Celem było znalezienie klientów o niższym zaangażowaniu, którzy mogą wymagać dalszej analizy.
 
-### 💡 Kluczowy wniosek (Insight)
-**Wczesne flagowanie użytkowników wykazujących symptomy odejścia (churnu) pozwala na drastyczne obniżenie kosztów utrzymania bazy klienckiej (Retention Cost) w porównaniu do wydatków niezbędnych na pozyskanie nowych użytkowników (Customer Acquisition Cost).**
+**💡 Wniosek:**  
+Zapytanie pozwala identyfikować nieaktywnych klientów na podstawie czasu od ostatniej transakcji. Takie informacje mogą pomóc w przygotowaniu działań mających na celu zwiększenie aktywności użytkowników.
 
 **Kod SQL:**
 ```sql
