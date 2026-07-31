@@ -7,9 +7,11 @@ Projekt przedstawia analizę danych bankowych z wykorzystaniem **MS SQL Server**
 > 📊 **Power BI Dashboard**  
 > Dane przygotowane w tym projekcie wykorzystałem również do stworzenia interaktywnego dashboardu w Power BI.
 >
-> 🔗 **Zobacz projekt Power BI →** *(link)*
+> 🔗 **[→ Zobacz projekt Power BI](README_02_PowerBI.md)**
+> 
+> Dashboard Preview:
+<img width="1621" height="844" alt="image" src="https://github.com/user-attachments/assets/7c4b8153-c3c6-4bc4-bb41-46ccb5a0a2dd" />
 
-*(tutaj screenshot dashboardu)*
 
 ---
 
