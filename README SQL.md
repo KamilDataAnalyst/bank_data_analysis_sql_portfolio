@@ -1,4 +1,4 @@
-# 🏦 Bank Data Analysis Project – SQL Portfolio
+q# 🏦 Bank Data Analysis Project – SQL Portfolio
 
 ## 📝 Project Overview
 Projekt powstał po to, aby wyciągnąć kluczowe wnioski biznesowe z danych bankowych. Analizowałem profile użytkowników, ich konta oraz historię operacji finansowych. Całość zrealizowałem za pomocą MS SQL.
