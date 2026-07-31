@@ -5,7 +5,7 @@
 Projekt przedstawia analizę danych bankowych z wykorzystaniem **MS SQL Server** oraz **Power BI**. Najpierw przygotowałem i przeanalizowałem dane w SQL, a następnie stworzyłem interaktywny dashboard prezentujący najważniejsze wskaźniki biznesowe.
 
 > 📊 **Power BI Dashboard**  
-> Dane przygotowane w tym projekcie wykorzystałem również do stworzenia interaktywnego dashboardu w Power BI.
+> Dane przygotowane w tym projekcie wykorzystałem do stworzenia interaktywnego dashboardu w Power BI.
 >
 > 🔗 **[→ Zobacz projekt Power BI](README_02_PowerBI.md)**
 > 
