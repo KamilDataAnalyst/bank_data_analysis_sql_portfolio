@@ -1,7 +1,15 @@
-q# 🏦 Bank Data Analysis Project – SQL Portfolio
+# 🏦 Bank Data Analysis Project
 
 ## 📝 Project Overview
-Projekt powstał po to, aby wyciągnąć kluczowe wnioski biznesowe z danych bankowych. Analizowałem profile użytkowników, ich konta oraz historię operacji finansowych. Całość zrealizowałem za pomocą MS SQL.
+
+Projekt przedstawia analizę danych bankowych z wykorzystaniem **MS SQL Server** oraz **Power BI**. Najpierw przygotowałem i przeanalizowałem dane w SQL, a następnie stworzyłem interaktywny dashboard prezentujący najważniejsze wskaźniki biznesowe.
+
+> 📊 **Power BI Dashboard**  
+> Dane przygotowane w tym projekcie wykorzystałem również do stworzenia interaktywnego dashboardu w Power BI.
+>
+> 🔗 **Zobacz projekt Power BI →** *(link)*
+
+*(tutaj screenshot dashboardu)*
 
 ---
 
@@ -47,7 +55,7 @@ Skupiłem się na trzech głównych obszarach:
 ---
 
 ## 📊 Data Model & Database Structure
-Pracowałem na relacyjnej bazie danych składającej się z trzech tabel, które odzwierciedlają strukturę prawdziwego systemu bankowego:
+Pracowałem na relacyjnej bazie danych składającej się z trzech tabel odwzorowujących uproszczony system bankowy:
 
 * `Klienci` [Tabela Wymiaru] – zawiera unikalne, stałe profile klientów banku (1 000 wierszy).  
   * *Kolumny:* (`klient_id`, `imie`, `nazwisko`, `miasto_rodzinne`, `data_urodzenia`, `segment_klienta`)
@@ -58,13 +66,13 @@ Pracowałem na relacyjnej bazie danych składającej się z trzech tabel, które
 
 ---
 
-## ⚙️ Repository Structure & Data Pipeline (ETL)
+## ⚙️ Repository Structure & Workflow
 
 Projekt podzieliłem na kolejne etapy – od importu surowych plików `.csv`, przez przygotowanie danych, aż po końcową analizę. W repozytorium znajdują się pliki źródłowe oraz skrypty SQL, które najlepiej uruchamiać w poniższej kolejności:
 
 1. **[/data](/data)** – Folder zawierający źródłowe pliki `.csv` (`Klienci`, `Konta`, `Transakcje`), na których opiera się cały projekt.
 
-2. **[01_import_and_fixes.sql](01_import_and_fixes.sql)** – **Porządkowanie typów danych:** Po imporcie danych poprawiłem typy kolumn przypisane automatycznie przez kreator SQL Server. Zmieniłem kwoty na `FLOAT`, daty na `DATETIME2`, a identyfikatory na `INT`, dzięki czemu dalsze obliczenia i analizy działają poprawnie.
+2. **[01_import_and_fixes.sql](01_import_and_fixes.sql)** – **Porządkowanie typów danych:** Po imporcie danych poprawiłem typy kolumn przypisane automatycznie przez SQL Server. Zmieniłem kwoty na `FLOAT`, daty na `DATETIME2`, a identyfikatory na `INT`, dzięki czemu dalsze obliczenia i analizy działają poprawnie.
 
 3. **[02_create_views.sql](02_create_views.sql)** – **Przygotowanie czystych widoków:** Utworzyłem widoki bazodanowe odpowiedzialne za czyszczenie i standaryzację danych przed analizą. W tym kroku ujednoliciłem wielkość liter w nazwach miast (żeby te same miejscowości nie zliczały się osobno), obsłużyłem wartości `NULL` oraz odfiltrowałem rekordy niespełniające przyjętych kryteriów biznesowych.
 
@@ -485,12 +493,14 @@ ORDER BY dni_bez_aktywnosci DESC;
 
 ---
 
-## 📈 Summary & Business Impact
+## 📈 Summary
 
-Projekt pozwolił na przekształcenie ponad 50 000 surowych rekordów transakcyjnych w realne wskaźniki biznesowe (KPI). Dzięki zastosowaniu zaawansowanych technik SQL, takich jak funkcje okna, wyrażenia CTE oraz procesy ETL, udało się:
-* **Zoptymalizować koszty CRM** poprzez precyzyjne wytypowanie klientów zagrożonych odejściem (Analiza Retencji).
-* **Zwiększyć bezpieczeństwo funduszy** dzięki stworzeniu fundamentu pod reguły antyfraudowe działające w czasie rzeczywistym (*velocity checks*).
-* **Dostarczyć wiedzy marketingowej** o geolokalizacji wydatków klientów, co umożliwia lepsze targetowanie kampanii push i ofert partnerskich.
+Projekt pozwolił przeanalizować ponad 50 000 transakcji i wyciągnąć z nich praktyczne wnioski biznesowe. W trakcie jego realizacji wykorzystałem m.in. funkcje okna, CTE, widoki oraz techniki czyszczenia danych w MS SQL Server.
+
+Najważniejsze obszary analizy obejmowały:
+* **Segmentację klientów** – porównanie grup klientów oraz identyfikację najbardziej wartościowych użytkowników.
+* **Analizę zachowań transakcyjnych** – badanie metod płatności, aktywności klientów oraz zmian wydatków w czasie.
+* **Wykrywanie anomalii i potencjalnych nadużyć** – identyfikację nietypowych transakcji oraz klientów wymagających dodatkowej analizy.
 
 ---
 
@@ -502,6 +512,3 @@ Projekt pozwolił na przekształcenie ponad 50 000 surowych rekordów transakcyj
    * `01_import_and_fixes.sql` (przygotowanie danych i zmiana typów kolumn)
    * `02_create_views.sql` (utworzenie widoków standaryzujących i czyszczących)
    * `03_analysis_queries.sql` (główne zapytania analityczne i raportowe)
-
----
-*Całość napisałem i udokumentowałem sam, traktując ten projekt jako główny element mojego portfolio data analyst.*
