@@ -40,7 +40,8 @@ Dashboard rozwija część SQL projektu, zamieniając dane i zapytania w interak
 
 Ta strona przedstawia najważniejsze wskaźniki biznesowe oraz ogólną aktywność klientów. Zawiera kluczowe KPI (liczbę klientów, liczbę transakcji, średnią wartość transakcji oraz przychód z prowizji za płatności kartą), a także wizualizacje pokazujące aktywność w ciągu dnia, wyniki w podziale na miasta oraz segmentację klientów.
 
-![Przegląd ogólny i aktywność](./sql_queries_screenshots/01_overview.png)
+<img width="1621" height="844" alt="image" src="https://github.com/user-attachments/assets/b35331d8-f8e5-4305-a8a0-83dc2e51cb6c" />
+
 
 </details>
 
@@ -51,7 +52,8 @@ Ta strona przedstawia najważniejsze wskaźniki biznesowe oraz ogólną aktywno�
 
 Ta strona skupia się na analizie zachowań zakupowych klientów. Pokazuje zmiany wydatków w czasie, udział metod płatności, mobilność klientów oraz ranking największych transakcji w podziale na miasta.
 
-![Trendy i struktura wydatków](./sql_queries_screenshots/02_trends.png)
+<img width="1597" height="843" alt="image" src="https://github.com/user-attachments/assets/449b01b9-e83e-43bb-ae8e-0a3234813355" />
+
 
 </details>
 
@@ -62,7 +64,8 @@ Ta strona skupia się na analizie zachowań zakupowych klientów. Pokazuje zmian
 
 Ta strona prezentuje analizy związane z bezpieczeństwem banku. Zawiera informacje o podejrzanych transakcjach, wykrytych anomaliach oraz klientach zagrożonych odejściem (Churn), ułatwiając identyfikację potencjalnych incydentów i obszarów wymagających dalszej analizy.
 
-![Bezpieczeństwo i analiza ryzyka](./sql_queries_screenshots/03_risk.png)
+<img width="1620" height="846" alt="image" src="https://github.com/user-attachments/assets/650e7e45-7af1-4623-b192-a32230fffc82" />
+
 
 </details>
 
